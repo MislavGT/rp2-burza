@@ -1,12 +1,14 @@
-<?php 
+<?php
 
-class IndexController
+class IndexController extends BaseController
 {
-	public function index() 
+	public function index()
 	{
-		// Samo preusmjeri na users podstranicu.
-		header( 'Location: index.php?rt=users' );
+		if (isset($_SESSION['username'])) {
+			header('Location: ' . __SITE_URL . '/burza.php?rt=???'); // TODO
+		}
+		else {
+			header('Location: ' . __SITE_URL . '/burza.php?rt=login');
+		}
 	}
-}; 
-
-?>
+};

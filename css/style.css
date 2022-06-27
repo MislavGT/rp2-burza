@@ -1,3 +1,183 @@
-table { border-spacing: 0; border-collapse: collapse; }
-td { border: solid 1px; padding: 5px; } 
-th { border: none; }
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+.header {
+    background-color: lightslategray;
+    padding: 1em;
+}
+
+.title {
+    color: white;
+    display: inline-block;
+}
+
+.logout {
+    float: right;
+    margin: 2em;
+}
+
+.username {
+    color: white;
+    font-size: large;
+    margin-bottom: 0.5em;
+}
+
+.textcontent {
+    max-width: 30em;
+    overflow-wrap: break-word;
+}
+
+.clickable {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+
+    z-index: 1;
+
+    /* background-image: url('empty.gif'); */
+}
+
+.maincontainer {
+    margin: 1em;
+}
+
+.projectcontainer {
+    width: fit-content;
+}
+
+.mainmenu {
+    margin: 2em;
+}
+
+.card {
+    border: 2px solid lightgray;
+    border-radius: 0.1em;
+    margin: 0.5em;
+    padding: 1em;
+    width: auto;
+    box-shadow: 0px 0px 5px lightgray;
+    position:relative ;
+}
+
+.card:hover {
+    box-shadow: 0px 0px 5px gray;
+}
+
+.projectmeta {
+    font-size: small;
+    color: gray;
+    padding-bottom: 0.5em;
+}
+
+.upperspace {
+    padding-top: 1em;
+}
+
+.projecttitle {
+    font-size: large;
+}
+
+.statustext {
+    border-radius: 2px;
+    color: white;
+    padding: 1px;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-bottom: 1.5px;
+    font-size: smaller;
+}
+
+.spacer {
+    margin-left: 0.2em;
+    margin-right: 0.2em;
+}
+
+.projectopen {
+    background-color: rgba(55, 189, 53, 0.7);
+}
+
+.projectclosed {
+    background-color: rgba(214, 34, 34, 0.7);
+}
+
+.errormessage {
+    color: red;
+}
+
+.menubutton {
+    display: inline-block;
+}
+
+.linkbutton:link,
+.linkbutton:visited,
+.linkbutton {
+    background-color: #892be282;
+    color: white;
+    padding: 0.1em 0.2em;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.linkbutton:hover,
+.linkbutton:active {
+    background-color: #8a2be2;
+}
+
+.menubuttonlink:link,
+.menubuttonlink:visited,
+.menubuttonlink {
+    color: #892be282;
+    ;
+    padding: 0.1em 0.2em;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.menubuttonlink:hover,
+.menubuttonlink:active {
+    color: #8a2be2;
+}
+
+.menubuttonlink.onlink {
+    color: #8a2be2;
+}
+
+.underlined {
+    border-bottom: 0.1em #8a2be2 solid;
+}
+
+.form-style-1 {
+    margin: 10px auto;
+    max-width: 400px;
+    padding: 20px 12px 10px 20px;
+    font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+.form-style-1 li {
+    padding: 0;
+    display: block;
+    list-style: none;
+    margin: 10px 0 0 0;
+}
+
+.form-style-1 label {
+    margin: 0 0 3px 0;
+    padding: 0px;
+    display: block;
+    font-weight: bold;
+}
+
+.form-style-1 .field-long {
+    width: 100%;
+}
+
+.form-style-1 input[type=submit],
+.form-style-1 input[type=button] {
+    border: none;
+}
