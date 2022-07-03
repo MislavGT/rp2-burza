@@ -6,6 +6,7 @@ require_once __DIR__ . '/../util.php';
 function seed_tables()
 {
 	seed_table_users();
+	seed_table_privilegije();
 	seed_table_dionice();
 	seed_table_transakcije();
 	seed_table_kapital();
@@ -30,6 +31,23 @@ function seed_table_users()
 		$st->execute(array('username' => 'pero', 'password' => password_hash('perinasifra', PASSWORD_DEFAULT)));
 	} catch (PDOException $e) {
 		exit("PDO error (seed_table_users): " . $e->getMessage());
+	}
+}
+
+function seed_table_privilegije()
+{
+	if (!is_table_empty('burza_privilegije')) {
+		return;
+	}
+
+	$db = DB::getConnection();
+
+	try {
+		$st = $db->prepare('INSERT INTO burza_privilegije(id_user, admin) 
+			(SELECT id, 1 FROM burza_users WHERE burza_users.username=:username)');
+		$st->execute(array('username' => 'mirko'));
+	} catch (PDOException $e) {
+		exit("PDO error (seed_table_privilegije): " . $e->getMessage());
 	}
 }
 

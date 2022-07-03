@@ -6,6 +6,7 @@ require_once __DIR__ . '/db.class.php';
 function create_tables()
 {
 	create_table_users();
+	create_table_privilegije();
 	create_table_dionice();
 	create_table_transakcije();
 	create_table_kapital();
@@ -30,6 +31,23 @@ function create_table_users()
 		$st->execute();
 	} catch (PDOException $e) {
 		exit("PDO error (create_table_users): " . $e->getMessage());
+	}
+}
+
+function create_table_privilegije()
+{
+	$db = DB::getConnection();
+
+	try {
+		$st = $db->prepare(
+			'CREATE TABLE IF NOT EXISTS burza_privilegije (' .
+				'id_user int NOT NULL PRIMARY KEY,' .
+				'admin bool)'
+		);
+
+		$st->execute();
+	} catch (PDOException $e) {
+		exit("PDO error (create_table_privilegije): " . $e->getMessage());
 	}
 }
 

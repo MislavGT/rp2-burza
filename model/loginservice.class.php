@@ -91,7 +91,7 @@ class LoginService
             $st = $db->prepare('SELECT * FROM burza_users WHERE registration_sequence=:reg_seq');
             $st->execute(array('reg_seq' => $niz));
         } catch (PDOException $e) {
-            exit('Greška u bazi: ' . $e->getMessage());
+            exit('Greška u bazi (LoginService.attempt_verify): ' . $e->getMessage());
         }
 
         $st->fetch();
@@ -117,7 +117,7 @@ class LoginService
             $st = $db->prepare('SELECT burza_users.id FROM burza_users WHERE registration_sequence=:reg_seq');
             $st->execute(array('reg_seq' => $niz));
         } catch (PDOException $e) {
-            exit('Greška u bazi: ' . $e->getMessage());
+            exit('Greška u bazi (LoginService.reg_seq_to_id): ' . $e->getMessage());
         }
 
         $row = $st->fetch();

@@ -47,6 +47,7 @@ function drop_table($table_name)
 function reset_database()
 {
 	drop_table('burza_users');
+	drop_table('burza_privilegije');
 	drop_table('burza_dionice');
 	drop_table('burza_transakcije');
 	drop_table('burza_kapital');
@@ -91,6 +92,17 @@ function ifeq($first, $second, $yes, $no)
 		return $yes;
 	} else {
 		return $no;
+	}
+}
+
+function render_username($user_id, $username) {
+	$capitalized = ucfirst($username);
+	$admin_string = ' (admin)';
+	$as = new AdminService();
+	if ($as->is_admin($user_id)) {
+		return $capitalized . $admin_string;
+	} else {
+		return $capitalized;
 	}
 }
 

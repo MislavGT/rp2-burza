@@ -24,6 +24,11 @@ Opis zadatka:
 5. registration_sequence varchar(20)
 6. has_registered int
 
+`burza_privileges`
+
+1. id_user int
+2. admin bool
+
 `burza_dionice`
 
 1. id int
