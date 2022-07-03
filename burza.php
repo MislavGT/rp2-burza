@@ -7,8 +7,8 @@ session_start();
 
 require_once 'app/init.php';
 
-// $registry = new Registry();
-// $registry->router = new Router($registry);
-// $registry->router->setPath( __SITE_PATH . '/controller' );
-// $registry->template = new Template($registry);
-// $registry->router->loader();
+$registry = new Registry();
+$registry->router = new Router($registry);
+$registry->router->setPath( __SITE_PATH . '/controller' );
+$registry->template = new Template($registry);
+$registry->router->loader();

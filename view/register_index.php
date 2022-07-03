@@ -5,7 +5,7 @@
 <br />
 
 
-<form method="post" action="<?php echo __SITE_URL . '/teamup.php?rt=register/attempt' ?>">
+<form method="post" action="<?php echo __SITE_URL . '/burza.php?rt=register/attempt' ?>">
     <ul class="form-style-1">
         <li>
             <label>username</label>

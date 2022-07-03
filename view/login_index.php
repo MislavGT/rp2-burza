@@ -5,7 +5,7 @@
 <br />
 
 
-<form method="post" action="<?php echo __SITE_URL . '/teamup.php?rt=login/attempt' ?>">
+<form method="post" action="<?php echo __SITE_URL . '/burza.php?rt=login/attempt' ?>">
     <ul class="form-style-1">
         <li>
             <label>username</label>
@@ -21,7 +21,7 @@
         </li>
 
         <li>
-            <a class="linkbutton" href="<?php echo __SITE_URL . '/teamup.php?rt=register' ?>"> registration page </a>
+            <a class="linkbutton" href="<?php echo __SITE_URL . '/burza.php?rt=register' ?>"> registration page </a>
         </li>
     </ul>
 </form>

@@ -64,6 +64,8 @@ function debug()
 	echo "<br />";
 	print_r($_SESSION);
 	echo "<br />";
+	echo "<br />";
+	echo "<br />";
 	echo '$_GET:<br/>';
 	echo "<br />";
 	print_r($_GET);
