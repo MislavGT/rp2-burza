@@ -23,9 +23,9 @@ Opis zadatka:
 3. `CREATE USER 'burza'@'localhost' IDENTIFIED BY 'burza';`
 4. `GRANT ALL PRIVILEGES ON burza.* TO 'burza'@'localhost';`
 
-## Overview baze
+## Tablice u bazi
 
-`burza_users`
+### `burza_users`
 
 1. id int
 2. username varchar(50)
@@ -34,19 +34,19 @@ Opis zadatka:
 5. registration_sequence varchar(20)
 6. has_registered int
 
-`burza_privileges`
+### `burza_privileges`
 
 1. id_user int
 2. admin bool
 
-`burza_dionice`
+### `burza_dionice`
 
 1. id int
 2. ime varchar(50)
 3. ticker varchar(4)
 4. izdano int
 
-`burza_transakcije`
+### `burza_transakcije`
 
 1. id int
 2. id_dionica int
@@ -54,13 +54,14 @@ Opis zadatka:
 4. cijena int
 5. prodao int
 6. kupio int
+7. datum date
 
-`burza_kapital`
+### `burza_kapital`
 
 1. id_user int
 2. kapital int
 
-`burza_imovina`
+### `burza_imovina`
 
 1. id_user int
 2. id_dionica int

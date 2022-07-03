@@ -82,7 +82,8 @@ function create_table_transakcije()
 				'kolicina int NOT NULL,' .
 				'cijena int NOT NULL,' .
 				'prodao int NOT NULL,' .
-				'kupio int NOT NULL)'
+				'kupio int NOT NULL,' .
+				'datum date NOT NULL)'
 		);
 
 		$st->execute();
