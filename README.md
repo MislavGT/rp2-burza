@@ -2,6 +2,10 @@
 
 Virtualna burza vrijednosnih papira
 
+Opis zadatka:
+
+> Svaki korisnik tokom registracije dobije fiksan početni kapital. Korisnik ima mogućnost prodaje i kupnje dionica. Klikom na dionicu dobiju se dodatne informacije te povijest cijena dionica. Na glavnoj stranici korisnik može vidjet cijeli svoj portfolio sa informacijama o neto vrijednosti korisnika, ukupna zarada, dnevna zarada, dividendu, povijest transakcija itd. Također postoji lista najbogatijih korisnika po neto vrijednosti te korisnik može vidjeti svoj rank. Administrator stranice može postavit početni kapital, komisiju, dividendu, kamatnu stopu itd. 
+
 ## Postavljanje baze
 
 1. Otvori terminal pa `sudo mysql`

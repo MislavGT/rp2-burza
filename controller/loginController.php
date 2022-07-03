@@ -36,7 +36,7 @@ class LoginController extends BaseController
         $login_result = $ls->attempt($_POST['username'], $_POST['password']);
 
         if ($login_result->success()) {
-            header('Location: ' . __SITE_URL . '/burza.php?rt=popis');
+            header('Location: ' . __SITE_URL . '/burza.php?rt=dashboard');
         } else {
             $this->index_with_error($login_result->error_message);
         }

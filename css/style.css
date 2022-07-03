@@ -13,6 +13,10 @@ body {
     display: inline-block;
 }
 
+.littletitle {
+    color: lightgrey;
+}
+
 .logout {
     float: right;
     margin: 2em;

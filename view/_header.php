@@ -9,7 +9,13 @@
 
 <body>
 	<div class="header">
-		<h1 class="title">PMFSE</h1>
+		<h1 class="title">PMFSE <?php 
+			if (isset($title)) {
+				echo '<span class="littletitle">';
+				echo ' ' . $title;
+				echo '</span>';
+			}
+		?> </h1>
 
 		<?php
 		if (isset($_SESSION['username'])) {
