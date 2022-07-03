@@ -1,8 +1,8 @@
 <?php require_once __SITE_PATH . '/view/_header.php'; ?>
 <?php require_once __SITE_PATH . '/view/view_util.php'; ?>
 
-<div class="projectcontainer">
+<div class="contentcontainer">
     Dashboard test
-    </p>
+</div>
 
-    <?php require_once __SITE_PATH . '/view/_footer.php'; ?>
+<?php require_once __SITE_PATH . '/view/_footer.php'; ?>
