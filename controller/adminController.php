@@ -5,12 +5,10 @@ class AdminController extends BaseController
 	public function index()
 	{
 		if (isset($_SESSION['username'])) {
-            echo "here 1";
-			// header('Location: ' . __SITE_URL . '/burza.php?rt=popis');
+			header('Location: ' . __SITE_URL . '/burza.php?rt=popis');
 		}
 		else {
-            echo "here 2";
-			// header('Location: ' . __SITE_URL . '/burza.php?rt=login');
+			header('Location: ' . __SITE_URL . '/burza.php?rt=login');
 		}
 	}
 
