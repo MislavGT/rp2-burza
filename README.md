@@ -45,11 +45,12 @@ Opis zadatka:
 2. ime varchar(50)
 3. ticker varchar(4)
 4. izdano int
+5. zadnja_cijena int
 
 ### `burza_transakcije`
 
 1. id int
-2. id_dionica int
+2. id_dionice int
 3. kolicina int
 4. cijena int
 5. prodao int

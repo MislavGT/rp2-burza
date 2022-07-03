@@ -61,7 +61,8 @@ function create_table_dionice()
 				'id int NOT NULL PRIMARY KEY AUTO_INCREMENT,' .
 				'ime varchar(50) NOT NULL,' .
 				'ticker varchar(4) NOT NULL,' .
-				'izdano int)'
+				'izdano int,' .
+				'zadnja_cijena int)'
 		);
 
 		$st->execute();

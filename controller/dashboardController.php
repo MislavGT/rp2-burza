@@ -6,6 +6,7 @@ class DashboardController extends BaseController
 {
     private function index_with_error($error_message)
     {
+        redirectIfNotLoggedIn();
         $this->registry->template->title = 'Dashboard';
         $this->registry->template->errorMessage = $error_message;
         $this->registry->template->show('dashboard_index');

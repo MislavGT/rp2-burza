@@ -4,6 +4,7 @@ class AdminController extends BaseController
 {
     private function index_with_error($error_message)
     {
+        redirectIfNotLoggedIn();
         $this->registry->template->title = 'Admin';
         $this->registry->template->errorMessage = $error_message;
         $this->registry->template->show('admin_index');
@@ -16,6 +17,7 @@ class AdminController extends BaseController
 
     public function reset()
     {
+        redirectIfNotLoggedIn();
 		if (isset($_SESSION['username']) || true) { // TODO FIXME (disable whole button)
             reset_database();
             $ls = new LoginService();

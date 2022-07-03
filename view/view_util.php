@@ -1,36 +1,28 @@
 <?php
 
-function print_project_meta($project, $user_map)
+function print_dionica_meta($dionica)
 {
     echo '<div class="projectmeta">';
-    echo "Autor: ";
-    echo ucfirst($user_map[$project['id_user']]['username']);
-    echo " (status: ";
-    if (strcmp($project['status'], "open") === 0) {
-        echo '<span class="statustext projectopen">';
-    } else {
-        echo '<span class="statustext projectclosed">';
-    }
-    echo $project['status'];
+    echo "Ticker: ";
+    echo '<span class="statustext projectopen">';
+    echo $dionica['ticker'];
     echo '</span>';
-    echo ")";
     echo '</div>';
 }
 
-function print_project_title($project)
-{
+function print_dionica_ime($dionica) {
     echo '<div class="projecttitle">';
-    echo $project['title'];
+    echo $dionica['ime'];
     echo "</div>";
 }
 
-function print_project_description($project)
+function print_dionica_description($dionica)
 {
     echo '<div class="projectmeta upperspace">';
-    echo "Description";
+    echo "Cijena";
     echo '</div>';
     echo '<div class="textcontent">';
-    echo $project['abstract'];
+    echo $dionica['zadnja_cijena'] . "kn";
     echo '</div>';
 }
 

@@ -60,13 +60,13 @@ function seed_table_dionice()
 	$db = DB::getConnection();
 
 	try {
-		$st = $db->prepare('INSERT INTO burza_dionice(ime, ticker, izdano) VALUES (:ime, :ticker, :izdano)');
+		$st = $db->prepare('INSERT INTO burza_dionice(ime, ticker, izdano, zadnja_cijena) VALUES (:ime, :ticker, :izdano, :zadnja_cijena)');
 
-		$st->execute(array('ime' => 'Meta Platforms', 'ticker' => 'META', 'izdano' => 100000));
-		$st->execute(array('ime' => 'Alphabet', 'ticker' => 'GOOG', 'izdano' => 200000));
-		$st->execute(array('ime' => 'Tesla', 'ticker' => 'TSLA', 'izdano' => 300000));
-		$st->execute(array('ime' => 'Palantir Technologies', 'ticker' => 'PLTR', 'izdano' => 400000));
-		$st->execute(array('ime' => 'Apple', 'ticker' => 'AAPL', 'izdano' => 500000));
+		$st->execute(array('ime' => 'Meta Platforms', 'ticker' => 'META', 'izdano' => 100000, 'zadnja_cijena' => 500));
+		$st->execute(array('ime' => 'Alphabet', 'ticker' => 'GOOG', 'izdano' => 200000, 'zadnja_cijena' => 500));
+		$st->execute(array('ime' => 'Tesla', 'ticker' => 'TSLA', 'izdano' => 300000, 'zadnja_cijena' => 500));
+		$st->execute(array('ime' => 'Palantir Technologies', 'ticker' => 'PLTR', 'izdano' => 400000, 'zadnja_cijena' => 500));
+		$st->execute(array('ime' => 'Apple', 'ticker' => 'AAPL', 'izdano' => 500000, 'zadnja_cijena' => 500));
 	} catch (PDOException $e) {
 		exit("PDO error (seed_table_dionice): " . $e->getMessage());
 	}
