@@ -36,7 +36,7 @@ class LoginService
         $db = DB::getConnection();
 
         try {
-            $st = $db->prepare('SELECT id, username, password_hash, has_registered FROM dz2_users WHERE username=:username');
+            $st = $db->prepare('SELECT id, username, password_hash, has_registered FROM burza_users WHERE username=:username');
             $st->execute(array('username' => $_POST['username']));
         } catch (PDOException $e) {
             exit('DB error (LoginService.attempt): ' . $e->getMessage());
@@ -62,7 +62,7 @@ class LoginService
         $db = DB::getConnection();
 
         try {
-            $st = $db->prepare('SELECT * FROM dz2_users WHERE username=:username');
+            $st = $db->prepare('SELECT * FROM burza_users WHERE username=:username');
             $st->execute(array('username' => $_POST['username']));
         } catch (PDOException $e) {
             exit('Greška u bazi: ' . $e->getMessage());
@@ -77,7 +77,7 @@ class LoginService
             $reg_seq .= chr(rand(0, 25) + ord('a')); // Zalijepi slučajno odabrano slovo
 
         try {
-            $st = $db->prepare('INSERT INTO dz2_users(username, password_hash, email, registration_sequence, has_registered) VALUES ' .
+            $st = $db->prepare('INSERT INTO burza_users(username, password_hash, email, registration_sequence, has_registered) VALUES ' .
                 '(:username, :password, :email, :reg_seq, 0)');
 
             $st->execute(array(

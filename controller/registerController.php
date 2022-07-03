@@ -47,7 +47,7 @@ class RegisterController extends BaseController
         $db = DB::getConnection();
 
         try {
-            $st = $db->prepare('SELECT * FROM dz2_users WHERE registration_sequence=:reg_seq');
+            $st = $db->prepare('SELECT * FROM burza_users WHERE registration_sequence=:reg_seq');
             $st->execute(array('reg_seq' => $_GET['niz']));
         } catch (PDOException $e) {
             exit('Greška u bazi: ' . $e->getMessage());
@@ -60,7 +60,7 @@ class RegisterController extends BaseController
         }
         else {
             try {
-                $st = $db->prepare('UPDATE dz2_users SET has_registered=1 WHERE registration_sequence=:reg_seq');
+                $st = $db->prepare('UPDATE burza_users SET has_registered=1 WHERE registration_sequence=:reg_seq');
                 $st->execute(array('reg_seq' => $_GET['niz']));
             } catch (PDOException $e) {
                 exit('Greška u bazi: ' . $e->getMessage());

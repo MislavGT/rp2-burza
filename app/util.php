@@ -2,16 +2,6 @@
 
 require_once __DIR__ . '/database/db.class.php';
 
-function read_from_aux($filename)
-{
-	$filename = __DIR__ . '/../aux/' . $filename;
-	return file_get_contents($filename);
-}
-
-function words_table_name($length)
-{
-	return "words_" . $length;
-}
 
 function is_table_empty($table_name)
 {
@@ -20,12 +10,25 @@ function is_table_empty($table_name)
 	try {
 		$st = $db->prepare('SELECT count(*) FROM ' . $table_name);
 		$st->execute();
-	
+
 		$r = intval($st->fetchColumn());
-		
+
 		return $r === 0;
 	} catch (PDOException $e) {
 		exit("PDO error (is_table_empty): " . $e->getMessage());
+	}
+}
+
+function row_count($table_name)
+{
+	$db = DB::getConnection();
+
+	try {
+		$st = $db->prepare('SELECT count(*) FROM ' . $table_name);
+		$st->execute();
+		return intval($st->fetchColumn());
+	} catch (PDOException $e) {
+		exit("PDO error (row_count): " . $e->getMessage());
 	}
 }
 
@@ -67,13 +70,9 @@ function debug()
 	echo "<br />";
 }
 
-function considered_member($member_type) {
-	return in_array($member_type, array("member", "invitation_accepted", "application_accepted"));
-}
-
 function redirectIfNotLoggedIn()
 {
 	if (!isset($_SESSION['username'])) {
-		header('Location: ' . __SITE_URL . '/teamup.php');
+		header('Location: ' . __SITE_URL . '/burza.php');
 	}
 }

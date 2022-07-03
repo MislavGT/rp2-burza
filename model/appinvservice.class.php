@@ -41,9 +41,9 @@ class AppInvService
 
         try {
             $st = $db->prepare('SELECT dz2_members.id_project, dz2_members.id_user, sec.username
-                FROM dz2_members JOIN dz2_projects JOIN dz2_users JOIN dz2_users AS sec
+                FROM dz2_members JOIN dz2_projects JOIN burza_users JOIN burza_users AS sec
                 WHERE dz2_members.id_project=dz2_projects.id
-                AND dz2_users.id=:user_id
+                AND burza_users.id=:user_id
                 AND sec.id=dz2_members.id_user
                 AND dz2_projects.id_user=:user_id
                 AND dz2_members.member_type="application_pending"');
