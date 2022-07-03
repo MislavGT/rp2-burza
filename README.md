@@ -5,11 +5,16 @@ Virtualna burza vrijednosnih papira
 Opis zadatka:
 
 1. :heavy_check_mark: Svaki korisnik tokom registracije dobije fiksan početni kapital.
-2. Korisnik ima mogućnost prodaje i kupnje dionica.
-3. Klikom na dionicu dobiju se dodatne informacije te povijest cijena dionica.
-4. Na glavnoj stranici korisnik može vidjet cijeli svoj portfolio sa informacijama o neto vrijednosti korisnika, ukupna zarada, dnevna zarada, dividendu, povijest transakcija itd.
-5. Također postoji lista najbogatijih korisnika po neto vrijednosti te korisnik može vidjeti svoj rank.
-6. Administrator stranice može postavit početni kapital, komisiju, dividendu, kamatnu stopu itd.
+2. :white_square_button: Korisnik ima mogućnost prodaje i kupnje dionica.
+3. :white_square_button: Klikom na dionicu dobiju se dodatne informacije te povijest cijena dionica.
+4. :white_square_button: Na glavnoj stranici korisnik može vidjet cijeli svoj portfolio sa informacijama o:
+    1. :white_square_button: neto vrijednosti korisnika
+    2. :white_square_button: ukupna zarada
+    3. :white_square_button: dnevna zarada
+    4. :white_square_button: dividendu
+    5. :white_square_button: povijest transakcija itd.
+5. :white_square_button: Također postoji lista najbogatijih korisnika po neto vrijednosti te korisnik može vidjeti svoj rank.
+6. :white_square_button: Administrator stranice može postavit početni kapital, komisiju, dividendu, kamatnu stopu itd.
 
 ## Postavljanje baze
 
