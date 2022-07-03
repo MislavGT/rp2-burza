@@ -1,10 +1,10 @@
 <?php
 
-abstract class BaseController 
+abstract class BaseController
 {
 	protected $registry;
 
-	function __construct( $registry ) 
+	function __construct($registry)
 	{
 		$this->registry = $registry;
 	}

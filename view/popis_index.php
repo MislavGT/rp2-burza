@@ -5,7 +5,7 @@
 <br />
 
 <p>
-Test
+    Test
 </p>
 
 <?php require_once __SITE_PATH . '/view/_footer.php'; ?>

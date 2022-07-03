@@ -2,32 +2,6 @@
 
 require_once __DIR__ . '/../app/database/db.class.php';
 
-class LoginResult
-{
-}
-
-class LoginFailure extends LoginResult
-{
-    public string $error_message;
-
-    public function __construct($error_message)
-    {
-        $this->error_message = $error_message;
-    }
-
-    public function success()
-    {
-        return false;
-    }
-}
-
-class LoginSuccess extends LoginResult
-{
-    public function success()
-    {
-        return true;
-    }
-};
 
 class LoginService
 {
@@ -45,15 +19,15 @@ class LoginService
         $row = $st->fetch();
 
         if ($row === false) {
-            return new LoginFailure('Korisnik s tim imenom ne postoji.');
+            return new OperationFailure('Korisnik s tim imenom ne postoji.');
         } else if ($row['has_registered'] === '0') {
-            return new LoginFailure('Korisnik s tim imenom se nije još registrirao. Provjerite e-mail.');
+            return new OperationFailure('Korisnik s tim imenom se nije još registrirao. Provjerite e-mail.');
         } else if (!password_verify($_POST['password'], $row['password_hash'])) {
-            return new LoginFailure('Lozinka nije ispravna.');
+            return new OperationFailure('Lozinka nije ispravna.');
         } else {
             $_SESSION['username'] = $_POST['username'];
             $_SESSION['id'] = $row['id'];
-            return new LoginSuccess();
+            return new OperationSuccess();
         }
     }
 
@@ -69,12 +43,14 @@ class LoginService
         }
 
         if ($st->rowCount() !== 0) {
-            return new LoginFailure('Korisnik s tim imenom već postoji u bazi.');
+            return new OperationFailure('Korisnik s tim imenom već postoji u bazi.');
         }
 
         $reg_seq = '';
-        for ($i = 0; $i < 20; ++$i)
+
+        for ($i = 0; $i < 20; ++$i){
             $reg_seq .= chr(rand(0, 25) + ord('a')); // Zalijepi slučajno odabrano slovo
+        }
 
         try {
             $st = $db->prepare('INSERT INTO burza_users(username, password_hash, email, registration_sequence, has_registered) VALUES ' .
@@ -102,10 +78,50 @@ class LoginService
         $isOK = mail($to, $subject, $message, $headers);
 
         if (!$isOK) {
-            return new LoginFailure('Ne mogu poslati mail. (Pokrenite na rp2 serveru.)');
+            return new OperationFailure('Ne mogu poslati mail. (Pokrenite na rp2 serveru.) // ' . $message);
         }
 
-        return new LoginSuccess();
+        return new OperationSuccess();
+    }
+
+    public function attempt_verify($niz) {
+        $db = DB::getConnection();
+
+        try {
+            $st = $db->prepare('SELECT * FROM burza_users WHERE registration_sequence=:reg_seq');
+            $st->execute(array('reg_seq' => $niz));
+        } catch (PDOException $e) {
+            exit('Greška u bazi: ' . $e->getMessage());
+        }
+
+        $st->fetch();
+
+        if ($st->rowCount() !== 1) {
+            return new OperationFailure('Taj registracijski niz ima ' . $st->rowCount() . 'korisnika, a treba biti točno 1 takav.');
+        } else {
+            try {
+                $st = $db->prepare('UPDATE burza_users SET has_registered=1 WHERE registration_sequence=:reg_seq');
+                $st->execute(array('reg_seq' => $niz));
+            } catch (PDOException $e) {
+                exit('Greška u bazi: ' . $e->getMessage());
+            }
+        }
+
+        return new OperationSuccess();
+    }
+
+    public function reg_seq_to_id($niz) {
+        $db = DB::getConnection();
+
+        try {
+            $st = $db->prepare('SELECT burza_users.id FROM burza_users WHERE registration_sequence=:reg_seq');
+            $st->execute(array('reg_seq' => $niz));
+        } catch (PDOException $e) {
+            exit('Greška u bazi: ' . $e->getMessage());
+        }
+
+        $row = $st->fetch();
+        return $row[0];
     }
 
     public function logout()

@@ -2,11 +2,15 @@
 
 require_once __DIR__ . '/db.class.php';
 
-create_table_users();
-create_table_dionice();
-create_table_transakcije();
-create_table_kapital();
-create_table_imovina();
+
+function create_tables()
+{
+	create_table_users();
+	create_table_dionice();
+	create_table_transakcije();
+	create_table_kapital();
+	create_table_imovina();
+}
 
 function create_table_users()
 {

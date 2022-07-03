@@ -1,7 +1,60 @@
 <?php
 
 require_once __DIR__ . '/database/db.class.php';
+require_once __SITE_PATH . '/app/database/' . 'create_tables.php';
+require_once __SITE_PATH . '/app/database/' . 'seed_tables.php';
 
+
+class OperationResult
+{
+}
+
+class OperationFailure extends OperationResult
+{
+	public string $error_message;
+
+	public function __construct($error_message)
+	{
+		$this->error_message = $error_message;
+	}
+
+	public function success()
+	{
+		return false;
+	}
+}
+
+class OperationSuccess extends OperationResult
+{
+	public function success()
+	{
+		return true;
+	}
+};
+
+function drop_table($table_name)
+{
+	$db = DB::getConnection();
+
+	try {
+		$st = $db->prepare('DROP TABLE ' . $table_name);
+		$st->execute();
+	} catch (PDOException $e) {
+		exit("PDO error (drop_table): " . $e->getMessage());
+	}
+}
+
+function reset_database()
+{
+	drop_table('burza_users');
+	drop_table('burza_dionice');
+	drop_table('burza_transakcije');
+	drop_table('burza_kapital');
+	drop_table('burza_imovina');
+
+	create_tables();
+	seed_tables();
+}
 
 function is_table_empty($table_name)
 {

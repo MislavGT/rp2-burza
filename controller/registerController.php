@@ -44,29 +44,16 @@ class RegisterController extends BaseController
             exit('Nešto ne valja s nizom.');
         }
 
-        $db = DB::getConnection();
+        $ls = new LoginService();
+        $verify_result = $ls->attempt_verify($_GET['niz']);
 
-        try {
-            $st = $db->prepare('SELECT * FROM burza_users WHERE registration_sequence=:reg_seq');
-            $st->execute(array('reg_seq' => $_GET['niz']));
-        } catch (PDOException $e) {
-            exit('Greška u bazi: ' . $e->getMessage());
-        }
-
-        $row = $st->fetch();
-
-        if ($st->rowCount() !== 1) {
-            exit('Taj registracijski niz ima ' . $st->rowCount() . 'korisnika, a treba biti točno 1 takav.');
-        }
-        else {
-            try {
-                $st = $db->prepare('UPDATE burza_users SET has_registered=1 WHERE registration_sequence=:reg_seq');
-                $st->execute(array('reg_seq' => $_GET['niz']));
-            } catch (PDOException $e) {
-                exit('Greška u bazi: ' . $e->getMessage());
-            }
-
+        if ($verify_result->success()) {
+            $user_id = $ls->reg_seq_to_id($_GET['niz']);
+            $ks = new KapitalService();
+            $ks->setCapitalToInitial($user_id);
             header('Location: ' . __SITE_URL . '/burza.php');
+        } else {
+            $this->index_with_error($verify_result->error_message);
         }
     }
 

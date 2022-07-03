@@ -3,11 +3,14 @@
 require_once __DIR__ . '/db.class.php';
 require_once __DIR__ . '/../util.php';
 
-seed_table_users();
-seed_table_dionice();
-seed_table_transakcije();
-seed_table_kapital();
-seed_table_imovina();
+function seed_tables()
+{
+	seed_table_users();
+	seed_table_dionice();
+	seed_table_transakcije();
+	seed_table_kapital();
+	seed_table_imovina();
+}
 
 function seed_table_users()
 {

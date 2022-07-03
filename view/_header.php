@@ -20,8 +20,8 @@
 
 	<div class="maincontainer">
 
-	<?php
-	if (isset($_SESSION['username'])) {
-		require('main_menu.php');
-	}
-	?>
+		<?php
+		if (isset($_SESSION['username'])) {
+			require('main_menu.php');
+		}
+		?>
