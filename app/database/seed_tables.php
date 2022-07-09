@@ -11,6 +11,7 @@ function seed_tables()
 	seed_table_transakcije();
 	seed_table_kapital();
 	seed_table_imovina();
+    seed_table_orderbook();
 }
 
 function seed_table_users()
@@ -123,5 +124,20 @@ function seed_table_imovina()
 		// $st->execute(array('username' => 'pero', 'password' => password_hash('perinasifra', PASSWORD_DEFAULT)));
 	} catch (PDOException $e) {
 		exit("PDO error (seed_table_imovina): " . $e->getMessage());
+	}
+}
+
+function seed_table_orderbook()
+{
+	if (!is_table_empty('burza_orderbook')) {
+		return;
+	}
+
+	$db = DB::getConnection();
+
+	try {
+		
+	} catch (PDOException $e) {
+		exit("PDO error (seed_table_orderbook): " . $e->getMessage());
 	}
 }

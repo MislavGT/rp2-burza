@@ -11,6 +11,7 @@ function create_tables()
 	create_table_transakcije();
 	create_table_kapital();
 	create_table_imovina();
+    create_table_orderbook();
 }
 
 function create_table_users()
@@ -125,5 +126,24 @@ function create_table_imovina()
 		$st->execute();
 	} catch (PDOException $e) {
 		exit("PDO error (create_table_imovina): " . $e->getMessage());
+	}
+}
+
+function create_table_orderbook()
+{
+	$db = DB::getConnection();
+
+	try {
+		$st = $db->prepare(
+			'CREATE TABLE IF NOT EXISTS burza_orderbook (' .
+				'id_user int NOT NULL,' .
+				'id_dionica int NOT NULL,' .
+				'kolicina int,' .
+				'tip ENUM("buy", "sell"))' 
+		);
+
+		$st->execute();
+	} catch (PDOException $e) {
+		exit("PDO error (create_table_users): " . $e->getMessage());
 	}
 }
