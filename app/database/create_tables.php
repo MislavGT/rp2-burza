@@ -139,6 +139,7 @@ function create_table_orderbook()
 				'id_user int NOT NULL,' .
 				'id_dionica int NOT NULL,' .
 				'kolicina int,' .
+				'cijena int,' .
 				'tip ENUM("buy", "sell"))' 
 		);
 

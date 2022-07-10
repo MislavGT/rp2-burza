@@ -35,4 +35,27 @@ class DioniceController extends BaseController
         redirectIfNotLoggedIn();
         $this->show_single($_GET['id']);
     }
+
+    public function kupiProdaj(){
+        //kontroler koji omogućuje prodavanje i kupnju dionica tako da obradi podatke iz forme jedna_dionica_index 
+        $ls = new DioniceService();
+        
+
+        $user_id = $_SESSION[ 'id' ];
+        $dionica_id = $_SESSION[ 'dionica' ];
+        $kolicina=$_POST['kolicina'];
+        $cijena=$_POST['cijena'];
+        $tip=$_POST['tip'];
+
+        $bool_vrijednost=$ls->kupiProdajOdmah( $user_id, $dionica_id, $kolicina, $cijena, $tip );
+
+        if(!$bool_vrijednost){
+            if(  ( $_POST['tip'] )=='buy' ){
+                $ls->kupiDionice( $user_id, $dionica_id, $kolicina, $cijena );} 
+            if( ( $_POST['tip'] )=='sell' ){
+                $ls->prodajDionice( $user_id, $dionica_id, $kolicina, $cijena );} 
+        }
+    }
+
+    
 }

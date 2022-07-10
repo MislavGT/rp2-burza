@@ -7,6 +7,8 @@
         print_dionica_meta($dionica);
         print_dionica_ime($dionica);
         print_dionica_description($dionica);
+        print_buy_sell_form();
+        $_SESSION['dionica']=$dionica['id'];
         ?>
     </div>
 </div>
