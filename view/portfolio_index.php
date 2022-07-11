@@ -6,7 +6,6 @@
         <?php
         print_mojNeto($neto);
         print_dnevnaZarada($dnevnaZarada);
-
         ?>
     </div>
 </div>

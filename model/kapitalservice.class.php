@@ -104,4 +104,7 @@ class KapitalService
 
     }
 
+    public function imovina($user_id) {
+        
+    }
 };

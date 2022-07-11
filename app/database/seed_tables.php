@@ -133,6 +133,12 @@ function seed_table_kapital()
 
 function seed_table_imovina()
 {
+	$ds = new DioniceService();
+	$us = new UserService();
+	$sve_dionice = $ds->sveDionice();
+	$svi_korisnici = $us->sviKorisnici();
+	$broj_korisnika = count($svi_korisnici);
+
 	if (!is_table_empty('burza_imovina')) {
 		return;
 	}
@@ -140,13 +146,14 @@ function seed_table_imovina()
 	$db = DB::getConnection();
 
 	try {
-		// $st = $db->prepare('INSERT INTO burza_imovina(username, password_hash, email, registration_sequence, has_registered) VALUES (:username, :password, \'a@b.com\', \'abc\', \'1\')');
+		foreach ($sve_dionice as $dionica) {
+			$kolicina = intval($dionica['izdano'] / $broj_korisnika);
 
-		// $st->execute(array('username' => 'mirko', 'password' => password_hash('mirkovasifra', PASSWORD_DEFAULT)));
-		// $st->execute(array('username' => 'ana', 'password' => password_hash('aninasifra', PASSWORD_DEFAULT)));
-		// $st->execute(array('username' => 'maja', 'password' => password_hash('majinasifra', PASSWORD_DEFAULT)));
-		// $st->execute(array('username' => 'slavko', 'password' => password_hash('slavkovasifra', PASSWORD_DEFAULT)));
-		// $st->execute(array('username' => 'pero', 'password' => password_hash('perinasifra', PASSWORD_DEFAULT)));
+			foreach ($svi_korisnici as $korisnik) {
+				$st = $db->prepare('INSERT INTO burza_imovina(id_user, id_dionica, kolicina) VALUES (:id_user, :id_dionica, :kolicina)');
+				$st->execute(array('id_user' => $korisnik['id'], 'id_dionica' => $dionica['id'], 'kolicina' => $kolicina));
+			}
+		}
 	} catch (PDOException $e) {
 		exit("PDO error (seed_table_imovina): " . $e->getMessage());
 	}
