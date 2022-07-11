@@ -62,7 +62,7 @@ function create_table_dionice()
 				'id int NOT NULL PRIMARY KEY AUTO_INCREMENT,' .
 				'ime varchar(50) NOT NULL,' .
 				'ticker varchar(4) NOT NULL,' .
-				'izdano int,' .
+				'izdano bigint,' .
 				'zadnja_cijena int)'
 		);
 
@@ -80,7 +80,7 @@ function create_table_transakcije()
 		$st = $db->prepare(
 			'CREATE TABLE IF NOT EXISTS burza_transakcije (' .
 				'id int,' .
-				'id_dionice int,' .
+				'id_dionica int,' .
 				'kolicina int,' .
 				'cijena int,' .
 				'prodao int,' .
@@ -137,12 +137,12 @@ function create_table_orderbook()
 	try {
 		$st = $db->prepare(
 			'CREATE TABLE IF NOT EXISTS burza_orderbook (' .
-				'id_user int NOT NULL,' .
-				'id_dionica int NOT NULL,' .
+				'id_user int,' .
+				'id_dionica int,' .
 				'kolicina int,' .
 				'cijena int,' .
-				'tip ENUM("buy", "sell"),' .
-				'datum date NOT NULL)'
+				'tip enum("buy", "sell"),' .
+				'datum date)'
 		);
 
 		$st->execute();

@@ -146,7 +146,7 @@ class DioniceService
 			}
 			catch( PDOException $e ) { exit( 'DB error (DioniceService.kupiProdajOdmah):' . $e->getMessage() ); }
 
-			if($st->rowCount() !== 1) return kupiDionice($id_user, $id_dionice, $kolicina, $cijena);
+			if($st->rowCount() !== 1) return $this->kupiDionice($id_user, $id_dionice, $kolicina, $cijena);
 
 			$row = $st->fetch();
 
@@ -166,11 +166,11 @@ class DioniceService
 					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $row['id_user'] ) );
 					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital-:za_platiti WHERE id_user = :id_user' );
 					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $id_user ) );
-					$st = $db->prepare( 'INSERT INTO burza_transakcije(id_dionice, kolicina, cijena, prodao, kupio, datum) VALUES ( :id_dionice, :kolicina, :cijena, :prodao, :kupio, :datum)' );
+					$st = $db->prepare( 'INSERT INTO burza_transakcije(id_dionica, kolicina, cijena, prodao, kupio, datum) VALUES ( :id_dionice, :kolicina, :cijena, :prodao, :kupio, :datum)' );
 					$st->execute( array( 'id_dionice' => $id_dionice, 'kolicina' => $row['kolicina'], 'cijena'=>$row['cijena'], 'prodao'=>$row['id_user'], 'kupio'=>$id_user, 'datum'=>$datum ) );
 					$st = $db->prepare( 'UPDATE burza_dionice SET zadnja_cijena=:cijena where id=:id_dionica' );
 					$st->execute( array( 'id_dionica' => $id_dionice, 'cijena' >= $row['cijena'] ) );
-					return kupiProdajOdmah($id_user, $id_dionice, $za_kupiti, $cijena, $tip);
+					return $this->kupiProdajOdmah($id_user, $id_dionice, $za_kupiti, $cijena, $tip);
 				}
 				catch( PDOException $e ) { exit( 'DB error (DioniceService.kupiProdajOdmah):' . $e->getMessage() ); }
 			}
@@ -190,7 +190,7 @@ class DioniceService
 					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $row['id_user'] ) );
 					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital-:za_platiti WHERE id_user = :id_user' );
 					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $id_user ) );
-					$st = $db->prepare( 'INSERT INTO burza_transakcije(id_dionice, kolicina, cijena, prodao, kupio, datum) VALUES ( :id_dionice, :kolicina, :cijena, :prodao, :kupio, :datum)' );
+					$st = $db->prepare( 'INSERT INTO burza_transakcije(id_dionica, kolicina, cijena, prodao, kupio, datum) VALUES ( :id_dionice, :kolicina, :cijena, :prodao, :kupio, :datum)' );
 					$st->execute( array( 'id_dionice' => $id_dionice, 'kolicina' => $kolicina, 'cijena'=>$row['cijena'], 'prodao'=>$row['id_user'], 'kupio'=>$id_user, 'datum'=>$datum ) );
 					$st = $db->prepare( 'UPDATE burza_dionice SET zadnja_cijena=:cijena where id=:id_dionica' );
 					$st->execute( array( 'id_dionica' => $id_dionice, 'cijena' >= $row['cijena'] ) );
@@ -213,7 +213,7 @@ class DioniceService
 					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $row['id_user'] ) );
 					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital-:za_platiti WHERE id_user = :id_user' );
 					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $id_user ) );
-					$st = $db->prepare( 'INSERT INTO burza_transakcije(id_dionice, kolicina, cijena, prodao, kupio, datum) VALUES ( :id_dionice, :kolicina, :cijena, :prodao, :kupio, :datum)' );
+					$st = $db->prepare( 'INSERT INTO burza_transakcije(id_dionica, kolicina, cijena, prodao, kupio, datum) VALUES ( :id_dionice, :kolicina, :cijena, :prodao, :kupio, :datum)' );
 					$st->execute( array( 'id_dionice' => $id_dionice, 'kolicina' => $row['kolicina'], 'cijena'=>$row['cijena'], 'prodao'=>$row['id_user'], 'kupio'=>$id_user, 'datum'=>$datum ) );
 					$st = $db->prepare( 'UPDATE burza_dionice SET zadnja_cijena=:cijena where id=:id_dionica' );
 					$st->execute( array( 'id_dionica' => $id_dionice, 'cijena' >= $row['cijena'] ) );
@@ -240,7 +240,7 @@ class DioniceService
 			}
 			catch( PDOException $e ) { exit( 'DB error (DioniceService.kupiProdajOdmah):' . $e->getMessage() ); }
 
-			if($st->rowCount() !== 1) return prodajDionice($id_user, $id_dionice, $kolicina, $cijena);
+			if($st->rowCount() !== 1) return $this->prodajDionice($id_user, $id_dionice, $kolicina, $cijena);
 
 			$row = $st->fetch();
 
@@ -260,11 +260,11 @@ class DioniceService
 					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $row['id_user'] ) );
 					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital+:za_platiti WHERE id_user = :id_user' );
 					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $id_user ) );
-					$st = $db->prepare( 'INSERT INTO burza_transakcije(id_dionice, kolicina, cijena, prodao, kupio, datum) VALUES ( :id_dionice, :kolicina, :cijena, :prodao, :kupio, :datum)' );
+					$st = $db->prepare( 'INSERT INTO burza_transakcije(id_dionica, kolicina, cijena, prodao, kupio, datum) VALUES ( :id_dionice, :kolicina, :cijena, :prodao, :kupio, :datum)' );
 					$st->execute( array( 'id_dionice' => $id_dionice, 'kolicina' => $row['kolicina'], 'cijena'=>$row['cijena'], 'kupio'=>$row['id_user'], 'prodao'=>$id_user, 'datum'=>$datum ) );
 					$st = $db->prepare( 'UPDATE burza_dionice SET zadnja_cijena=:cijena where id=:id_dionica' );
 					$st->execute( array( 'id_dionica' => $id_dionice, 'cijena' >= $row['cijena'] ) );
-					return kupiProdajOdmah($id_user, $id_dionice, $za_prodati, $cijena, $tip);
+					return $this->kupiProdajOdmah($id_user, $id_dionice, $za_prodati, $cijena, $tip);
 				}
 				catch( PDOException $e ) { exit( 'DB error (DioniceService.kupiProdajOdmah):' . $e->getMessage() ); }
 			}
@@ -284,7 +284,7 @@ class DioniceService
 					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $row['id_user'] ) );
 					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital+:za_platiti WHERE id_user = :id_user' );
 					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $id_user ) );
-					$st = $db->prepare( 'INSERT INTO burza_transakcije(id_dionice, kolicina, cijena, prodao, kupio, datum) VALUES ( :id_dionice, :kolicina, :cijena, :prodao, :kupio, :datum)' );
+					$st = $db->prepare( 'INSERT INTO burza_transakcije(id_dionica, kolicina, cijena, prodao, kupio, datum) VALUES ( :id_dionice, :kolicina, :cijena, :prodao, :kupio, :datum)' );
 					$st->execute( array( 'id_dionice' => $id_dionice, 'kolicina' => $kolicina, 'cijena'=>$row['cijena'], 'kupio'=>$row['id_user'], 'prodao'=>$id_user, 'datum'=>$datum ) );
 					$st = $db->prepare( 'UPDATE burza_dionice SET zadnja_cijena=:cijena where id=:id_dionica' );
 					$st->execute( array( 'id_dionica' => $id_dionice, 'cijena' >= $row['cijena'] ) );
@@ -307,7 +307,7 @@ class DioniceService
 					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $row['id_user'] ) );
 					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital+:za_platiti WHERE id_user = :id_user' );
 					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $id_user ) );
-					$st = $db->prepare( 'INSERT INTO burza_transakcije(id_dionice, kolicina, cijena, prodao, kupio, datum) VALUES ( :id_dionice, :kolicina, :cijena, :prodao, :kupio, :datum)' );
+					$st = $db->prepare( 'INSERT INTO burza_transakcije(id_dionica, kolicina, cijena, prodao, kupio, datum) VALUES ( :id_dionice, :kolicina, :cijena, :prodao, :kupio, :datum)' );
 					$st->execute( array( 'id_dionice' => $id_dionice, 'kolicina' => $row['kolicina'], 'cijena'=>$row['cijena'], 'kupio'=>$row['id_user'], 'prodao'=>$id_user, 'datum'=>$datum ) );
 					$st = $db->prepare( 'UPDATE burza_dionice SET zadnja_cijena=:cijena where id=:id_dionica' );
 					$st->execute( array( 'id_dionica' => $id_dionice, 'cijena' >= $row['cijena'] ) );
