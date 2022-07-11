@@ -159,7 +159,7 @@ class DioniceService
 					$st = $db->prepare( 'DELETE * FROM burza_orderbook WHERE burza_orderbook.id_dionica=:id_dionica AND burza_orderbook.id_user=:id_user AND burza_orderbook.cijena<=:cijena AND burza_orderbook.tip=:tip ORDER BY burza_orderbook.cijena ASC, datum ASC LIMIT 1' );
 					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'], 'cijena'=>$cijena, 'tip'=>$tip2 ) );
 					$st = $db->prepare( 'INSERT INTO burza_imovina (id_user, id_dionica, kolicina) VALUES(:id_user, :id_dionica, :kolicina) ON DUPLICATE KEY UPDATE burza_imovina.kolicina=burza_imovina.kolicina+:kolicina');
-					$st->execute( array( 'id_dionica' => $id_dionice, id_user => $id_user, 'kolicina' => $row['kolicina'] ) );
+					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $id_user, 'kolicina' => $row['kolicina'] ) );
 					$st = $db->prepare( 'DELETE * FROM burza_imovina WHERE burza_imovina.id_dionica=:id_dionica AND burza_imovina.id_user=:id_user' );
 					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'] ) );
 					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital+:za_platiti WHERE id_user = :id_user' );
@@ -183,7 +183,7 @@ class DioniceService
 					$st = $db->prepare( 'UPDATE burza_orderbook SET kolicina=:visak WHERE burza_orderbook.id_dionica=:id_dionica AND burza_orderbook.id_user=:id_user AND burza_orderbook.datum =:datum' );
 					$st->execute( array( 'visak' => $visak, 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'], 'datum' => $row['datum'] ) );
 					$st = $db->prepare( 'INSERT INTO burza_imovina (id_user, id_dionica, kolicina) VALUES(:id_user, :id_dionica, :kolicina) ON DUPLICATE KEY UPDATE burza_imovina.kolicina=burza_imovina.kolicina+:kolicina');
-					$st->execute( array( 'id_dionica' => $id_dionice, id_user => $id_user, 'kolicina' => $kolicina ) );
+					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $id_user, 'kolicina' => $kolicina ) );
 					$st = $db->prepare( 'UPDATE burza_imovina SET kolicina=kolicina-:kolicina WHERE burza_imovina.id_dionica=:id_dionica AND burza_imovina.id_user=:id_user' );
 					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'], "kolicina" => $kolicina ) );
 					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital+:za_platiti WHERE id_user = :id_user' );
@@ -206,7 +206,7 @@ class DioniceService
 					$st = $db->prepare( 'DELETE * FROM burza_orderbook WHERE burza_orderbook.id_dionica=:id_dionica AND burza_orderbook.id_user=:id_user AND burza_orderbook.cijena<=:cijena AND burza_orderbook.tip=:tip ORDER BY burza_orderbook.cijena ASC, datum ASC LIMIT 1' );
 					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'], 'cijena'=>$cijena, 'tip'=>$tip2 ) );
 					$st = $db->prepare( 'INSERT INTO burza_imovina (id_user, id_dionica, kolicina) VALUES(:id_user, :id_dionica, :kolicina) ON DUPLICATE KEY UPDATE burza_imovina.kolicina=burza_imovina.kolicina+:kolicina');
-					$st->execute( array( 'id_dionica' => $id_dionice, id_user => $id_user, 'kolicina' => $row['kolicina'] ) );
+					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $id_user, 'kolicina' => $row['kolicina'] ) );
 					$st = $db->prepare( 'DELETE * FROM burza_imovina WHERE burza_imovina.id_dionica=:id_dionica AND burza_imovina.id_user=:id_user' );
 					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'] ) );
 					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital+:za_platiti WHERE id_user = :id_user' );
@@ -253,7 +253,7 @@ class DioniceService
 					$st = $db->prepare( 'DELETE * FROM burza_orderbook WHERE burza_orderbook.id_dionica=:id_dionica AND burza_orderbook.id_user=:id_user AND burza_orderbook.cijena>=:cijena AND burza_orderbook.tip=:tip ORDER BY burza_orderbook.cijena DESC, datum ASC LIMIT 1' );
 					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'], 'cijena'=>$cijena, 'tip'=>$tip2 ) );
 					$st = $db->prepare( 'INSERT INTO burza_imovina (id_user, id_dionica, kolicina) VALUES(:id_user, :id_dionica, :kolicina) ON DUPLICATE KEY UPDATE burza_imovina.kolicina=burza_imovina.kolicina+:kolicina');
-					$st->execute( array( 'id_dionica' => $id_dionice, id_user => $row['id_user'], 'kolicina' => $row['kolicina'] ) );
+					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'], 'kolicina' => $row['kolicina'] ) );
 					$st = $db->prepare( 'UPDATE burza_imovina SET kolicina=kolicina-:kolicina WHERE burza_imovina.id_dionica=:id_dionica AND burza_imovina.id_user=:id_user' );
 					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $id_user, 'kolicina' => $row['kolicina'] ) );
 					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital-:za_platiti WHERE id_user = :id_user' );
@@ -277,7 +277,7 @@ class DioniceService
 					$st = $db->prepare( 'UPDATE burza_orderbook SET kolicina=:visak WHERE burza_orderbook.id_dionica=:id_dionica AND burza_orderbook.id_user=:id_user AND burza_orderbook.datum =:datum' );
 					$st->execute( array( 'visak' => $visak, 'id_dionica' => $id_dionice, 'id_user' =>$row['id_user'], 'datum' => $row['datum'] ) );
 					$st = $db->prepare( 'INSERT INTO burza_imovina (id_user, id_dionica, kolicina) VALUES(:id_user, :id_dionica, :kolicina) ON DUPLICATE KEY UPDATE burza_imovina.kolicina=burza_imovina.kolicina+:kolicina');
-					$st->execute( array( 'id_dionica' => $id_dionice, id_user => $row['id_user'], 'kolicina' => $kolicina ) );
+					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'], 'kolicina' => $kolicina ) );
 					$st = $db->prepare( 'UPDATE burza_imovina SET kolicina=kolicina-:kolicina WHERE burza_imovina.id_dionica=:id_dionica AND burza_imovina.id_user=:id_user' );
 					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $id_user, "kolicina" => $kolicina ) );
 					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital-:za_platiti WHERE id_user = :id_user' );
@@ -300,7 +300,7 @@ class DioniceService
 					$st = $db->prepare( 'DELETE * FROM burza_orderbook WHERE burza_orderbook.id_dionica=:id_dionica AND burza_orderbook.id_user=:id_user AND burza_orderbook.cijena>=:cijena AND burza_orderbook.tip=:tip ORDER BY burza_orderbook.cijena DESC, datum ASC LIMIT 1' );
 					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'], 'cijena'=>$cijena, 'tip'=>$tip2 ) );
 					$st = $db->prepare( 'INSERT INTO burza_imovina (id_user, id_dionica, kolicina) VALUES(:id_user, :id_dionica, :kolicina) ON DUPLICATE KEY UPDATE burza_imovina.kolicina=burza_imovina.kolicina+:kolicina');
-					$st->execute( array( 'id_dionica' => $id_dionice, id_user => $row['id_user'], 'kolicina' => $row['kolicina'] ) );
+					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'], 'kolicina' => $row['kolicina'] ) );
 					$st = $db->prepare( 'UPDATE burza_imovina SET kolicina=kolicina-:kolicina WHERE burza_imovina.id_dionica=:id_dionica AND burza_imovina.id_user=:id_user' );
 					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $id_user, 'kolicina' => $row['kolicina'] ) );
 					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital-:za_platiti WHERE id_user = :id_user' );
