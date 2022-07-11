@@ -16,13 +16,22 @@ class DioniceController extends BaseController
     }
 
 
-    private function show_single($dionica_id) {
+    private function show_single_with_error($dionica_id, $errorMessage) {
         $user_id = $_SESSION['id'];
         $ds = new DioniceService();
         $this->registry->template->title = 'Jedna dionica';
         $this->registry->template->dionica = $ds->jednaDionica($dionica_id);
         $this->registry->template->username = $_SESSION['username'];
+        $this->registry->template->errorMessage = $errorMessage;
         $this->registry->template->show('jedna_dionica_index');
+    }
+
+    private function show_single($dionica_id) {
+        if (isset($_GET['errorMessage'])) {
+            $this->show_single_with_error($dionica_id, $_GET['errorMessage']);
+        } else {
+            $this->show_single_with_error($dionica_id, "");
+        }
     }
 
     public function index()
