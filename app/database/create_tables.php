@@ -79,13 +79,13 @@ function create_table_transakcije()
 	try {
 		$st = $db->prepare(
 			'CREATE TABLE IF NOT EXISTS burza_transakcije (' .
-				'id int NOT NULL PRIMARY KEY AUTO_INCREMENT,' .
-				'id_dionice int NOT NULL,' .
-				'kolicina int NOT NULL,' .
-				'cijena int NOT NULL,' .
-				'prodao int NOT NULL,' .
-				'kupio int NOT NULL,' .
-				'datum date NOT NULL)'
+				'id int,' .
+				'id_dionice int,' .
+				'kolicina int,' .
+				'cijena int,' .
+				'prodao int,' .
+				'kupio int,' .
+				'datum date)'
 		);
 
 		$st->execute();

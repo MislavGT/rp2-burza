@@ -62,6 +62,7 @@ function seed_table_dionice()
 
 	try {
 		$st = $db->prepare('INSERT INTO burza_dionice(ime, ticker, izdano, zadnja_cijena) VALUES (:ime, :ticker, :izdano, :zadnja_cijena)');
+		/*
 		$curl = curl_init();
 
 		curl_setopt_array($curl, [
@@ -87,9 +88,11 @@ function seed_table_dionice()
 			echo "cURL Error #:" . $err; return FALSE;}
 		
 		foreach($response as $i){
-			$x = 1000000
+			$x = 1000000;
 			$st->execute(array('ime' => $i['longName'], 'ticker' => $i['symbol'], 'izdano' => $x, 'zadnja_cijena' => $i['postMarketPrice']));
 		}
+		*/
+		$st->execute(array('ime' => 'APPLE', 'ticker' => 'AAPL', 'izadno' => '1000', 'zadnja_cijena' => '100'));
 	} catch (PDOException $e) {
 		exit("PDO error (seed_table_dionice): " . $e->getMessage());
 	}
