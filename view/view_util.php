@@ -160,5 +160,4 @@ function print_mojNeto($neto){
 function print_dnevnaZarada($dnevnaZarada){
     echo 'Moja dnevna zarada je:';
     echo $dnevnaZarada;
-
 }

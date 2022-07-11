@@ -5,6 +5,7 @@
     <div class="card">
         <?php
         print_mojNeto($neto);
+        print_mojPortfelj()
         print_dnevnaZarada($dnevnaZarada);
 
         ?>
