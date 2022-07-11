@@ -91,7 +91,7 @@ function seed_table_dionice()
 			$st->execute(array('ime' => $i['longName'], 'ticker' => $i['symbol'], 'izdano' => $i['sharesOutstanding'], 'zadnja_cijena' => $i['regularMarketPrice']));
 		}
 		*/
-		$st->execute(array('ime' => 'APPLE', 'ticker' => 'AAPL', 'izadno' => '1000', 'zadnja_cijena' => '100'));
+		$st->execute(array('ime' => 'APPLE', 'ticker' => 'AAPL', 'izdano' => '1000', 'zadnja_cijena' => '100'));
 	} catch (PDOException $e) {
 		exit("PDO error (seed_table_dionice): " . $e->getMessage());
 	}
