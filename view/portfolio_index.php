@@ -5,9 +5,17 @@
     <div class="card">
         <?php
         print_mojNeto($neto);
+        echo '</br>';
         print_dnevnaZarada($dnevnaZarada);
+        echo '</br>';
         ?>
     </div>
+
+    <h3>Dionice</h3>
+
+    <?php
+    print_portfolio($imovina);
+    ?>
 </div>
 
 
