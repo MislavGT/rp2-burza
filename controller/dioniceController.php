@@ -47,14 +47,7 @@ class DioniceController extends BaseController
         $cijena=$_POST['cijena'];
         $tip=$_POST['tip'];
 
-        $bool_vrijednost=$ls->kupiProdajOdmah( $user_id, $dionica_id, $kolicina, $cijena, $tip );
-
-        if(!$bool_vrijednost){
-            if(  ( $_POST['tip'] )=='buy' ){
-                $ls->kupiDionice( $user_id, $dionica_id, $kolicina, $cijena );} 
-            if( ( $_POST['tip'] )=='sell' ){
-                $ls->prodajDionice( $user_id, $dionica_id, $kolicina, $cijena );} 
-        }
+        $ls->kupiProdajOdmah( $user_id, $dionica_id, $kolicina, $cijena, $tip );
     }
 
     

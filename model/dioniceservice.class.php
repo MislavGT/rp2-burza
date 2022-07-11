@@ -6,8 +6,11 @@ class DioniceService
 {
     public function sveDionice()
     {
-        $db = DB::getConnection();
-
+		try
+		{
+		$db = DB::getConnection();
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
         try {
             $st = $db->prepare('SELECT * FROM burza_dionice');
             $st->execute();
@@ -23,8 +26,11 @@ class DioniceService
     }
 
     public function jednaDionica($id_dionice) {
-        $db = DB::getConnection();
-
+		try
+		{
+		$db = DB::getConnection();
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
         try {
             $st = $db->prepare('SELECT *
                 FROM burza_dionice
@@ -38,15 +44,18 @@ class DioniceService
     }
 
     public function kupiDionice( $id_user, $id_dionice, $kolicina, $cijena ){
-		// Provjeri prvo jel postoje taj user i ta dionica
-		
+		// Provjeri prvo postoje li taj user i ta dionica
 		try
 		{
-			$db = DB::getConnection();
+		$db = DB::getConnection();
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+		try
+		{
 			$st = $db->prepare( 'SELECT * FROM burza_users WHERE burza_users.id=:id' );
 			$st->execute( array( 'id' => $id_user ) );
 		}
-		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+		catch( PDOException $e ) { exit( 'DB error (DioniceService.kupiDionice):'  . $e->getMessage() ); }
 
 		if( $st->rowCount() !== 1 )
 			throw new Exception( 'kupiDionice :: User with the given id_user does not exist.' );
@@ -54,34 +63,39 @@ class DioniceService
 
 		try
 		{
-			$db = DB::getConnection();
+
 			$st = $db->prepare( 'SELECT * FROM burza_dionice WHERE burza_dionice.id=:id' );
 			$st->execute( array( 'id' => $id_dionice ) );
 		}
-		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+		catch( PDOException $e ) { exit( 'DB error (DioniceService.kupiDionice):' . $e->getMessage() ); }
 
 		if( $st->rowCount() !== 1 )
 			throw new Exception( 'kupiDionice :: Dionica with the given id_dionice does not exist.' );
-        
+		$datum=date('Y-m-d H:i:s');
 		try
 		{
-			$db = DB::getConnection();
-			$st = $db->prepare( 'INSERT INTO burza_orderbook(id_user, id_dionica, kolicina, cijena, tip) VALUES (:id_user, :id_dionica, :kolicina, :cijena, :tip)' );
+
+			$st = $db->prepare( 'INSERT INTO burza_orderbook(id_user, id_dionica, kolicina, cijena, tip, datum) VALUES (:id_user, :id_dionica, :kolicina, :cijena, :tip, :datum)' );
 			
-			$st->execute( array( 'id_user' => $id_user, 'id_dionica' => $id_dionice, 'kolicina' => $kolicina, 'cijena'=>$cijena, 'tip' => 'buy' ) );
+			$st->execute( array( 'id_user' => $id_user, 'id_dionica' => $id_dionice, 'kolicina' => $kolicina, 'cijena'=>$cijena, 'tip'=>'buy', 'datum'=>$datum ) );
 		}
-		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+		catch( PDOException $e ) { exit( 'DB error (DioniceService.kupiDionice):' . $e->getMessage() ); }
 	}
 
     public function prodajDionice( $id_user, $id_dionice, $kolicina, $cijena ){
-		// Provjeri prvo jel postoje taj user i ta dionica
 		try
 		{
-			$db = DB::getConnection();
+		$db = DB::getConnection();
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+		// Provjeri prvo postoje li taj user i ta dionica
+		try
+		{
+
 			$st = $db->prepare( 'SELECT * FROM burza_users WHERE burza_users.id=:id' );
 			$st->execute( array( 'id' => $id_user ) );
 		}
-		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+		catch( PDOException $e ) { exit( 'DB error (DioniceService.prodajDionice):' . $e->getMessage() ); }
 
 		if( $st->rowCount() !== 1 )
 			throw new Exception( 'prodajDionice :: User with the given id_user does not exist.' );
@@ -89,141 +103,219 @@ class DioniceService
 
 		try
 		{
-			$db = DB::getConnection();
+
 			$st = $db->prepare( 'SELECT * FROM burza_dionice WHERE burza_dionice.id=:id' );
 			$st->execute( array( 'id' => $id_dionice ) );
 		}
-		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+		catch( PDOException $e ) { exit( 'DB error (DioniceService.prodajDionice):' . $e->getMessage() ); }
 
 		if( $st->rowCount() !== 1 )
 			throw new Exception( 'prodajDionice :: Dionica with the given id_dionice does not exist.' );
-
+		$datum = date('Y-m-d H:i:s')
 	    try
 		{
-			$db = DB::getConnection();
-			$st = $db->prepare( 'INSERT INTO burza_orderbook(id_user, id_dionica, kolicina, cijena, tip) VALUES (:id_user, :id_dionica, :kolicina, :cijena, :tip)' );
-			$st->execute( array( 'id_user' => $id_user, 'id_dionica' => $id_dionice, 'kolicina' => $kolicina, 'cijena'=>$cijena, 'tip' => "sell" ) );
+
+			$st = $db->prepare( 'INSERT INTO burza_orderbook(id_user, id_dionica, kolicina, cijena, tip, datum) VALUES (:id_user, :id_dionica, :kolicina, :cijena, :tip, :datum)' );
+			$st->execute( array( 'id_user' => $id_user, 'id_dionica' => $id_dionice, 'kolicina' => $kolicina, 'cijena'=>$cijena, 'tip' => "sell", 'datum'=>$datum ) );
 		}
-		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+		catch( PDOException $e ) { exit( 'DB error (DioniceService.prodajDionice):' . $e->getMessage() ); }
 	}
 
     public function kupiProdajOdmah($id_user, $id_dionice, $kolicina, $cijena, $tip){
-		if($tip==='buy') $tip2='sell';
-		//ako prodaje provjerimo ima li dovoljno imovine za prodavati, ako ima, micemo mu imovinu iz burza_imovina
+		try
+		{
+		$db = DB::getConnection();
+		}
+		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+		if($tip==='buy') {
+			$tip2='sell';
+			$potrebno = $cijena * $kolicina;
+			try
+			{
+				$st = $db->prepare( 'SELECT * FROM burza_kapital WHERE burza_kapital.id_user=:id_user AND burza_kapital.kapital>=:potrebno' );
+				$st->execute( array( 'id_user' => $id_user, 'potrebno' => $potrebno ) );
+			}
+			catch( PDOException $e ) { exit( 'DB error (DioniceService.kupiProdajOdmah):' . $e->getMessage() ); }
+
+			if( $st->rowCount() !== 1 ) throw new Exception( 'prodajDionice :: User nema dovoljno kapitala' );
+
+			try
+			{
+				$st = $db->prepare( 'SELECT * FROM burza_orderbook WHERE burza_orderbook.id_dionica=:id_dionica AND burza_orderbook.id_user != :id_user AND burza_orderbook.cijena<=:cijena AND burza_orderbook.tip=:tip ORDER BY burza_orderbook.cijena ASC, burza_orderbook.datum ASC LIMIT 1' );
+				$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $id_user, 'kolicina' => $kolicina, 'cijena'=>$cijena, 'tip'=>$tip2 ) );
+			}
+			catch( PDOException $e ) { exit( 'DB error (DioniceService.kupiProdajOdmah):' . $e->getMessage() ); }
+
+			if($st->rowCount() !== 1) return kupiDionice($id_user, $id_dionice, $kolicina, $cijena);
+
+			$row = $st->fetch();
+
+			if($kolicina > $row['kolicina']){
+				$datum = date('Y-m-d H:i:s')
+				$za_kupiti = $kolicina - $row['kolicina']; // koliko je jos ostalo za kasnije
+				$za_platiti = $row['kolicina'] * $row['cijena']; // koliko sada treba platiti
+				try
+				{
+					$st = $db->prepare( 'DELETE * FROM burza_orderbook WHERE burza_orderbook.id_dionica=:id_dionica AND burza_orderbook.id_user=:id_user AND burza_orderbook.cijena<=:cijena AND burza_orderbook.tip=:tip ORDER BY burza_orderbook.cijena ASC, burza_orderbook.datum ASC LIMIT 1' );
+					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'], 'kolicina' => $kolicina, 'cijena'=>$cijena, 'tip'=>$tip2 ) );
+					$st = $db->prepare( 'INSERT INTO burza_imovina (id_user, id_dionica, kolicina) VALUES(:id_user, :id_dionica, :kolicina) ON DUPLICATE KEY UPDATE burza_imovina.kolicina=burza_imovina.kolicina+:kolicina');
+					$st->execute( array( 'id_dionica' => $id_dionice, id_user => $id_user, 'kolicina' => $row['kolicina'] ) );
+					$st = $db->prepare( 'DELETE * FROM burza_imovina WHERE burza_imovina.id_dionica=:id_dionica AND burza_imovina.id_user=:id_user' );
+					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'] ) );
+					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital+:za_platiti WHERE id_user = :id_user' );
+					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $row['id_user'] ) );
+					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital-:za_platiti WHERE id_user = :id_user' );
+					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $id_user ) );
+					$st = $db->prepare( 'INSERT INTO burza_transakcije(id_dionice, kolicina, cijena, prodao, kupio, datum) VALUES ( :id_dionice, :kolicina, :cijena, :prodao, :kupio, :datum)' );
+					$st->execute( array( 'id_dionice' => $id_dionice, 'kolicina' => $row['kolicina'], 'cijena'=>$row['cijena'], 'prodao'=>$row['id_user'], 'kupio'=>$id_user, 'datum'=>$datum ) );
+					$st = $db->prepare( 'UPDATE burza_dionice SET zadnja_cijena=:cijena where id=:id_dionica' );
+					$st->execute( array( 'id_dionica' => $id_dionice, 'cijena' >= $row['cijena'] ) );
+					return kupiProdajOdmah($id_user, $id_dionice, $za_kupiti, $cijena, $tip)
+				}
+				catch( PDOException $e ) { exit( 'DB error (DioniceService.kupiProdajOdmah):' . $e->getMessage() ); }
+			}
+			elseif($kolicina < $row['kolicina']){
+				$datum = date('Y-m-d H:i:s')
+				$visak = $row['kolicina'] - $kolicina; // koliko je jos ostalo za kasnije
+				$za_platiti = $kolicina * $row['cijena']; // koliko sada treba platiti
+				try
+				{
+					$st = $db->prepare( 'UPDATE burza_orderbook SET kolicina=:visak WHERE burza_orderbook.id_dionica=:id_dionica AND burza_orderbook.id_user=:id_user AND burza_orderbook.datum =:datum' );
+					$st->execute( array( 'visak' => $visak, 'id_dionica' = $id_dionica, 'id_user' = $row['id_user'], 'datum' = $row['datum'] ) );
+					$st = $db->prepare( 'INSERT INTO burza_imovina (id_user, id_dionica, kolicina) VALUES(:id_user, :id_dionica, :kolicina) ON DUPLICATE KEY UPDATE burza_imovina.kolicina=burza_imovina.kolicina+:kolicina');
+					$st->execute( array( 'id_dionica' => $id_dionice, id_user => $id_user, 'kolicina' => $kolicina ) );
+					$st = $db->prepare( 'UPDATE burza_imovina SET kolicina=kolicina-:kolicina WHERE burza_imovina.id_dionica=:id_dionica AND burza_imovina.id_user=:id_user' );
+					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'], "kolicina" => $kolicina ) );
+					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital+:za_platiti WHERE id_user = :id_user' );
+					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $row['id_user'] ) );
+					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital-:za_platiti WHERE id_user = :id_user' );
+					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $id_user ) );
+					$st = $db->prepare( 'INSERT INTO burza_transakcije(id_dionice, kolicina, cijena, prodao, kupio, datum) VALUES ( :id_dionice, :kolicina, :cijena, :prodao, :kupio, :datum)' );
+					$st->execute( array( 'id_dionice' => $id_dionice, 'kolicina' => $kolicina, 'cijena'=>$row['cijena'], 'prodao'=>$row['id_user'], 'kupio'=>$id_user, 'datum'=>$datum ) );
+					$st = $db->prepare( 'UPDATE burza_dionice SET zadnja_cijena=:cijena where id=:id_dionica' );
+					$st->execute( array( 'id_dionica' => $id_dionice, 'cijena' >= $row['cijena'] ) );
+					return TRUE;
+				}
+				catch( PDOException $e ) { exit( 'DB error (DioniceService.kupiProdajOdmah):' . $e->getMessage() ); }
+			}
+			elseif($kolicina === $row['kolicina']){
+				$datum = date('Y-m-d H:i:s')
+				$za_platiti = $row['kolicina'] * $row['cijena']; // koliko sada treba platiti
+				try
+				{
+					$st = $db->prepare( 'DELETE * FROM burza_orderbook WHERE burza_orderbook.id_dionica=:id_dionica AND burza_orderbook.id_user=:id_user AND burza_orderbook.cijena<=:cijena AND burza_orderbook.tip=:tip ORDER BY burza_orderbook.cijena ASC, burza_orderbook.datum ASC LIMIT 1' );
+					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'], 'kolicina' => $kolicina, 'cijena'=>$cijena, 'tip'=>$tip2 ) );
+					$st = $db->prepare( 'INSERT INTO burza_imovina (id_user, id_dionica, kolicina) VALUES(:id_user, :id_dionica, :kolicina) ON DUPLICATE KEY UPDATE burza_imovina.kolicina=burza_imovina.kolicina+:kolicina');
+					$st->execute( array( 'id_dionica' => $id_dionice, id_user => $id_user, 'kolicina' => $row['kolicina'] ) );
+					$st = $db->prepare( 'DELETE * FROM burza_imovina WHERE burza_imovina.id_dionica=:id_dionica AND burza_imovina.id_user=:id_user' );
+					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'] ) );
+					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital+:za_platiti WHERE id_user = :id_user' );
+					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $row['id_user'] ) );
+					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital-:za_platiti WHERE id_user = :id_user' );
+					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $id_user ) );
+					$st = $db->prepare( 'INSERT INTO burza_transakcije(id_dionice, kolicina, cijena, prodao, kupio, datum) VALUES ( :id_dionice, :kolicina, :cijena, :prodao, :kupio, :datum)' );
+					$st->execute( array( 'id_dionice' => $id_dionice, 'kolicina' => $row['kolicina'], 'cijena'=>$row['cijena'], 'prodao'=>$row['id_user'], 'kupio'=>$id_user, 'datum'=>$datum ) );
+					$st = $db->prepare( 'UPDATE burza_dionice SET zadnja_cijena=:cijena where id=:id_dionica' );
+					$st->execute( array( 'id_dionica' => $id_dionice, 'cijena' >= $row['cijena'] ) );
+					return TRUE;
+				}
+				catch( PDOException $e ) { exit( 'DB error (DioniceService.kupiProdajOdmah):' . $e->getMessage() ); }
+			}
+		}
 		else{
 			$tip2='buy';
 			 //provjeri ima li taj user te dionice u toj kolicini
 			try
 			{
-				$db = DB::getConnection();
 				$st = $db->prepare( 'SELECT * FROM burza_imovina WHERE burza_imovina.id_user=:id_user AND burza_imovina.id_dionica=:id_dionica AND burza_imovina.kolicina>=:kolicina' );
 				$st->execute( array( 'id_user' => $id_user, 'id_dionica' => $id_dionice, 'kolicina' => $kolicina ) );
 			}
-			catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+			catch( PDOException $e ) { exit( 'DB error (DioniceService.kupiProdajOdmah):' . $e->getMessage() ); }
     
 			if( $st->rowCount() !== 1 ) throw new Exception( 'prodajDionice :: User nema te dionice u toj količini' );
+			try
+			{
+				$st = $db->prepare( 'SELECT * FROM burza_orderbook WHERE burza_orderbook.id_dionica=:id_dionica AND burza_orderbook.id_user != :id_user AND burza_orderbook.cijena>=:cijena AND burza_orderbook.tip=:tip ORDER BY burza_orderbook.cijena DESC, burza_orderbook.datum ASC LIMIT 1' );
+				$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $id_user, 'kolicina' => $kolicina, 'cijena'=>$cijena, 'tip'=>$tip2 ) );
+			}
+			catch( PDOException $e ) { exit( 'DB error (DioniceService.kupiProdajOdmah):' . $e->getMessage() ); }
 
-			//ako ima i sve prodaje, brisemo mu tu imovinu
+			if($st->rowCount() !== 1) return prodajDionice($id_user, $id_dionice, $kolicina, $cijena);
+
 			$row = $st->fetch();
-            $kolicina2=$row["kolicina"]-$kolicina;
-			if($kolicina2===0){
+
+			if($kolicina > $row['kolicina']){
+				$datum = date('Y-m-d H:i:s')
+				$za_prodati = $kolicina - $row['kolicina']; // koliko je jos ostalo za kasnije
+				$za_platiti = $row['kolicina'] * $row['cijena']; // koliko sada treba platiti
 				try
 				{
-					$db = DB::getConnection();
-					$st = $db->prepare( 'DELETE FROM burza_imovina WHERE  burza_imovina.id_user=:id_user AND burza_imovina.id_dionica=:id_dionica;' );
-					$st->execute( array('id_user'=>$id_user, 'id_dionica' => $id_dionice ) );
+					$st = $db->prepare( 'DELETE * FROM burza_orderbook WHERE burza_orderbook.id_dionica=:id_dionica AND burza_orderbook.id_user=:id_user AND burza_orderbook.cijena>=:cijena AND burza_orderbook.tip=:tip ORDER BY burza_orderbook.cijena DESC, burza_orderbook.datum ASC LIMIT 1' );
+					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'], 'kolicina' => $kolicina, 'cijena'=>$cijena, 'tip'=>$tip2 ) );
+					$st = $db->prepare( 'INSERT INTO burza_imovina (id_user, id_dionica, kolicina) VALUES(:id_user, :id_dionica, :kolicina) ON DUPLICATE KEY UPDATE burza_imovina.kolicina=burza_imovina.kolicina+:kolicina');
+					$st->execute( array( 'id_dionica' => $id_dionice, id_user => $row['id_user'], 'kolicina' => $row['kolicina'] ) );
+					$st = $db->prepare( 'UPDATE burza_imovina SET kolicina=kolicina-:kolicina WHERE burza_imovina.id_dionica=:id_dionica AND burza_imovina.id_user=:id_user' );
+					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $id_user, 'kolicina' => $row['kolicina'] ) );
+					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital-:za_platiti WHERE id_user = :id_user' );
+					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $row['id_user'] ) );
+					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital+:za_platiti WHERE id_user = :id_user' );
+					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $id_user ) );
+					$st = $db->prepare( 'INSERT INTO burza_transakcije(id_dionice, kolicina, cijena, prodao, kupio, datum) VALUES ( :id_dionice, :kolicina, :cijena, :prodao, :kupio, :datum)' );
+					$st->execute( array( 'id_dionice' => $id_dionice, 'kolicina' => $row['kolicina'], 'cijena'=>$row['cijena'], 'kupio'=>$row['id_user'], 'prodao'=>$id_user, 'datum'=>$datum ) );
+					$st = $db->prepare( 'UPDATE burza_dionice SET zadnja_cijena=:cijena where id=:id_dionica' );
+					$st->execute( array( 'id_dionica' => $id_dionice, 'cijena' >= $row['cijena'] ) );
+					return kupiProdajOdmah($id_user, $id_dionice, $za_prodati, $cijena, $tip)
 				}
-				catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
+				catch( PDOException $e ) { exit( 'DB error (DioniceService.kupiProdajOdmah):' . $e->getMessage() ); }
 			}
-			else{
+			elseif($kolicina < $row['kolicina']){
+				$datum = date('Y-m-d H:i:s')
+				$visak = $row['kolicina'] - $kolicina; // koliko je jos ostalo za kasnije
+				$za_platiti = $kolicina * $row['cijena']; // koliko sada treba platiti
 				try
 				{
-		    		$db = DB::getConnection();
-					$st = $db->prepare( 'UPDATE burza_imovina SET kolicina=:kolicina2 WHERE burza_imovina.id_dionica=:id_dionica AND burza_imovina.id_user=:id_user ' );
-					$st->execute( array( 'kolicina2'=>$kolicina2, 'id_dionica' => $id_dionice, 'id_user'=>$id_user) );
-		    	}  
-		        catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
-
+					$st = $db->prepare( 'UPDATE burza_orderbook SET kolicina=:visak WHERE burza_orderbook.id_dionica=:id_dionica AND burza_orderbook.id_user=:id_user AND burza_orderbook.datum =:datum' );
+					$st->execute( array( 'visak' => $visak, 'id_dionica' = $id_dionica, 'id_user' = $row['id_user'], 'datum' = $row['datum'] ) );
+					$st = $db->prepare( 'INSERT INTO burza_imovina (id_user, id_dionica, kolicina) VALUES(:id_user, :id_dionica, :kolicina) ON DUPLICATE KEY UPDATE burza_imovina.kolicina=burza_imovina.kolicina+:kolicina');
+					$st->execute( array( 'id_dionica' => $id_dionice, id_user => $row['id_user'], 'kolicina' => $kolicina ) );
+					$st = $db->prepare( 'UPDATE burza_imovina SET kolicina=kolicina-:kolicina WHERE burza_imovina.id_dionica=:id_dionica AND burza_imovina.id_user=:id_user' );
+					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $id_user, "kolicina" => $kolicina ) );
+					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital-:za_platiti WHERE id_user = :id_user' );
+					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $row['id_user'] ) );
+					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital+:za_platiti WHERE id_user = :id_user' );
+					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $id_user ) );
+					$st = $db->prepare( 'INSERT INTO burza_transakcije(id_dionice, kolicina, cijena, prodao, kupio, datum) VALUES ( :id_dionice, :kolicina, :cijena, :prodao, :kupio, :datum)' );
+					$st->execute( array( 'id_dionice' => $id_dionice, 'kolicina' => $kolicina, 'cijena'=>$row['cijena'], 'kupio'=>$row['id_user'], 'prodao'=>$id_user, 'datum'=>$datum ) );
+					$st = $db->prepare( 'UPDATE burza_dionice SET zadnja_cijena=:cijena where id=:id_dionica' );
+					$st->execute( array( 'id_dionica' => $id_dionice, 'cijena' >= $row['cijena'] ) );
+					return TRUE;
+				}
+				catch( PDOException $e ) { exit( 'DB error (DioniceService.kupiProdajOdmah):' . $e->getMessage() ); }
 			}
-		
-
-		} 
-		try
-		{
-			$db = DB::getConnection();
-			$st = $db->prepare( 'SELECT * FROM burza_orderbook WHERE burza_orderbook.id_dionica=:id_dionica AND burza_orderbook.kolicina=:kolicina AND burza_orderbook.cijena=:cijena AND burza_orderbook.tip=:tip LIMIT 1' );
-			$st->execute( array( 'id_dionica' => $id_dionice, 'kolicina' => $kolicina, 'cijena'=>$cijena, 'tip'=>$tip2 ) );
+			elseif($kolicina === $row['kolicina']){
+				$datum = date('Y-m-d H:i:s')
+				$za_platiti = $row['kolicina'] * $row['cijena']; // koliko sada treba platiti
+				try
+				{
+					$st = $db->prepare( 'DELETE * FROM burza_orderbook WHERE burza_orderbook.id_dionica=:id_dionica AND burza_orderbook.id_user=:id_user AND burza_orderbook.cijena>=:cijena AND burza_orderbook.tip=:tip ORDER BY burza_orderbook.cijena DESC, burza_orderbook.datum ASC LIMIT 1' );
+					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'], 'kolicina' => $kolicina, 'cijena'=>$cijena, 'tip'=>$tip2 ) );
+					$st = $db->prepare( 'INSERT INTO burza_imovina (id_user, id_dionica, kolicina) VALUES(:id_user, :id_dionica, :kolicina) ON DUPLICATE KEY UPDATE burza_imovina.kolicina=burza_imovina.kolicina+:kolicina');
+					$st->execute( array( 'id_dionica' => $id_dionice, id_user => $row['id_user'], 'kolicina' => $row['kolicina'] ) );
+					$st = $db->prepare( 'UPDATE burza_imovina SET kolicina=kolicina-:kolicina WHERE burza_imovina.id_dionica=:id_dionica AND burza_imovina.id_user=:id_user' );
+					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $id_user, 'kolicina' => $row['kolicina'] ) );
+					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital-:za_platiti WHERE id_user = :id_user' );
+					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $row['id_user'] ) );
+					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital+:za_platiti WHERE id_user = :id_user' );
+					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $id_user ) );
+					$st = $db->prepare( 'INSERT INTO burza_transakcije(id_dionice, kolicina, cijena, prodao, kupio, datum) VALUES ( :id_dionice, :kolicina, :cijena, :prodao, :kupio, :datum)' );
+					$st->execute( array( 'id_dionice' => $id_dionice, 'kolicina' => $row['kolicina'], 'cijena'=>$row['cijena'], 'kupio'=>$row['id_user'], 'prodao'=>$id_user, 'datum'=>$datum ) );
+					$st = $db->prepare( 'UPDATE burza_dionice SET zadnja_cijena=:cijena where id=:id_dionica' );
+					$st->execute( array( 'id_dionica' => $id_dionice, 'cijena' >= $row['cijena'] ) );
+					return TRUE;
+				}
+				catch( PDOException $e ) { exit( 'DB error (DioniceService.kupiProdajOdmah):' . $e->getMessage() ); }
+			}
 		}
-		catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
-    
-		if( $st->rowCount() === 1 ){
-			$row = $st->fetch();
-            $id_user2= $row["id_user"];
-			//imamo match, brisemo stavku iz orderbooka
-			try
-			{
-				$db = DB::getConnection();
-				$st = $db->prepare( 'DELETE FROM burza_orderbook WHERE  burza_orderbook.id_user=:id_user AND burza_orderbook.id_dionica=:id_dionica AND burza_orderbook.kolicina=:kolicina AND burza_orderbook.cijena=:cijena AND burza_orderbook.tip=:tip LIMIT 1;' );
-				$st->execute( array('id_user'=>$id_user2, 'id_dionica' => $id_dionice, 'kolicina' => $kolicina, 'cijena'=>$cijena, 'tip' => $tip2 ) );
-			}
-			catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
-            
-			//dodavanje transakcije
-			if($tip==='buy'){
-				$tm=$id_user;
-				$id_user=$id_user2;
-				$id_user2=$tm;
-			}
-
-			$datum=date("Y/m/d");
-			try
-			{
-		    	$db = DB::getConnection();
-				$st = $db->prepare( 'INSERT INTO burza_transakcije(id_dionice, kolicina, cijena, prodao, kupio, datum) VALUES ( :id_dionice, :kolicina, :cijena, :prodao, :kupio, :datum)' );
-				$st->execute( array( 'id_dionice' => $id_dionice, 'kolicina' => $kolicina, 'cijena'=>$cijena, 'prodao'=>$id_user, 'kupio'=>$id_user2, 'datum'=>$datum ) );
-		    }  
-		    catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
-
-			//dodavanje imovine onome koji je kupio
-			try
-			{
-		    	$db = DB::getConnection();
-				$st = $db->prepare( 'SELECT * FROM burza_imovina WHERE burza_imovina.id_dionica=:id_dionica AND burza_imovina.id_user=:id_user' );
-				$st->execute( array( 'id_dionica' => $id_dionice, 'id_user'=>$id_user2) );
-		    }  
-		    catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
 			
-			//imamo li vec tog usera i te dionice u popisu imovina?
-			//ako imamo mijenjamo vrijednost kolicine
-			if( $st->rowCount() == 1 ){
-				$row = $st->fetch();
-                $kolicina2=$kolicina+$row["kolicina"];
-				try
-				{
-		    		$db = DB::getConnection();
-					$st = $db->prepare( 'UPDATE burza_imovina SET kolicina=:kolicina2 WHERE burza_imovina.id_dionica=:id_dionica AND burza_imovina.id_user=:id_user ' );
-					$st->execute( array( 'kolicina2'=>$kolicina2, 'id_dionica' => $id_dionice, 'id_user'=>$id_user2) );
-		    	}  
-		        catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
-			}
-
-			//ako nemamo moramo dodati
-			if( $st->rowCount() == 0 ){
-				try
-				{
-		    		$db = DB::getConnection();
-					$st = $db->prepare( 'INSERT INTO burza_imovina(id_user, id_dionica, kolicina) VALUES ( :id_user, :id_dionica, :kolicina)' );
-					$st->execute( array( 'id_user' => $id_user2, 'id_dionica'=>$id_dionice, 'kolicina' => $kolicina) );
-		    	}  
-		    	catch( PDOException $e ) { exit( 'PDO error ' . $e->getMessage() ); }
-
-			}
-			
-			
-			return TRUE;
-			
-		} 
-
-		return FALSE;
 	}
 }

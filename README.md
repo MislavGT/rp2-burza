@@ -5,7 +5,7 @@ Virtualna burza vrijednosnih papira
 Opis zadatka:
 
 1. :heavy_check_mark: Svaki korisnik tokom registracije dobije fiksan početni kapital.
-2. :x: Korisnik ima mogućnost prodaje i kupnje dionica.
+2. :heavy_check_mark: Korisnik ima mogućnost prodaje i kupnje dionica.
 3. :x: Klikom na dionicu dobiju se dodatne informacije te povijest cijena dionica.
 4. :x: Na glavnoj stranici korisnik može vidjet cijeli svoj portfolio sa informacijama o:
     1. :x: neto vrijednosti korisnika

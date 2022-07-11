@@ -120,7 +120,8 @@ function create_table_imovina()
 			'CREATE TABLE IF NOT EXISTS burza_imovina (' .
 				'id_user int NOT NULL,' .
 				'id_dionica int NOT NULL,' .
-				'kolicina int NOT NULL)'
+				'kolicina int NOT NULL,' .
+				'PRIMARY KEY (id_user, id_dionica))'
 		);
 
 		$st->execute();
@@ -140,7 +141,8 @@ function create_table_orderbook()
 				'id_dionica int NOT NULL,' .
 				'kolicina int,' .
 				'cijena int,' .
-				'tip ENUM("buy", "sell"))' 
+				'tip ENUM("buy", "sell"),' .
+				'datum date NOT NULL)'
 		);
 
 		$st->execute();

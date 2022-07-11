@@ -62,12 +62,34 @@ function seed_table_dionice()
 
 	try {
 		$st = $db->prepare('INSERT INTO burza_dionice(ime, ticker, izdano, zadnja_cijena) VALUES (:ime, :ticker, :izdano, :zadnja_cijena)');
+		$curl = curl_init();
 
-		$st->execute(array('ime' => 'Meta Platforms', 'ticker' => 'META', 'izdano' => 100000, 'zadnja_cijena' => 500));
-		$st->execute(array('ime' => 'Alphabet', 'ticker' => 'GOOG', 'izdano' => 200000, 'zadnja_cijena' => 500));
-		$st->execute(array('ime' => 'Tesla', 'ticker' => 'TSLA', 'izdano' => 300000, 'zadnja_cijena' => 500));
-		$st->execute(array('ime' => 'Palantir Technologies', 'ticker' => 'PLTR', 'izdano' => 400000, 'zadnja_cijena' => 500));
-		$st->execute(array('ime' => 'Apple', 'ticker' => 'AAPL', 'izdano' => 500000, 'zadnja_cijena' => 500));
+		curl_setopt_array($curl, [
+			CURLOPT_URL => "https://yfapi.net/v6/finance/quote?symbols=AAPL%2CMSFT%2CGOOG%2CAMZN%2CTSLA%2CJNJ%2CMETA%2CNVDA%2CXOM%2CPG",
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_FOLLOWLOCATION => true,
+			CURLOPT_ENCODING => "",
+			CURLOPT_MAXREDIRS => 10,
+			CURLOPT_TIMEOUT => 30,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST => "GET",
+			CURLOPT_HTTPHEADER => [
+				"x-api-key: placeholder"
+			],
+		]);
+
+		$response = json_decode(curl_exec($curl), true)['quoteResponse']['result'];
+		$err = curl_error($curl);
+
+		curl_close($curl);
+
+		if ($err) {
+			echo "cURL Error #:" . $err; return FALSE;}
+		
+		foreach($response as $i){
+			$x = 1000000
+			$st->execute(array('ime' => $i['longName'], 'ticker' => $i['symbol'], 'izdano' => $x, 'zadnja_cijena' => $i['postMarketPrice']));
+		}
 	} catch (PDOException $e) {
 		exit("PDO error (seed_table_dionice): " . $e->getMessage());
 	}

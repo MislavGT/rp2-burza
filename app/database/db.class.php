@@ -16,7 +16,7 @@ class DB
 	{
 		if (DB::$db === null) {
 			try {
-				DB::$db = new PDO("mysql: host=localhost; dbname=burza; charset=utf8", 'burza', 'burza');
+				DB::$db = new PDO("mysql: host=placeholder; dbname=placeholder; charset=utf8", 'placeholder', 'placeholder');
 				DB::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			} catch (PDOException $e) {
 				exit('PDO Error: ' . $e->getMessage());
