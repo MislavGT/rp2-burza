@@ -160,8 +160,7 @@ function seed_table_orderbook()
 	$db = DB::getConnection();
 
 	try {
-		$st = $db->prepare('INSERT INTO burza_orderbook(id_user, id_dionica, kolicina, cijena, tip, datum) VALUES (:id_user, :id_dionica, :kolicina, :cijena, :tip, :datum');
-		$st->execute(array("id_user" => 1, "id_dionica" => 1, "kolicina" => 10, "cijena" => 100, "tip" => "buy", "datum" => null));
+
 	} catch (PDOException $e) {
 		exit("PDO error (seed_table_orderbook): " . $e->getMessage());
 	}
