@@ -85,7 +85,7 @@ function create_table_transakcije()
 				'cijena int,' .
 				'prodao int,' .
 				'kupio int,' .
-				'datum date)'
+				'datum datetime)'
 		);
 
 		$st->execute();
@@ -142,7 +142,7 @@ function create_table_orderbook()
 				'kolicina int,' .
 				'cijena int,' .
 				'tip enum("buy", "sell"),' .
-				'datum date)'
+				'datum datetime)'
 		);
 
 		$st->execute();

@@ -52,6 +52,7 @@ function reset_database()
 	drop_table('burza_transakcije');
 	drop_table('burza_kapital');
 	drop_table('burza_imovina');
+	drop_table('burza_orderbook')
 
 	create_tables();
 	seed_tables();
