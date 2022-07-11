@@ -117,3 +117,35 @@ function print_buy_sell_form(){
     echo ' <input type="submit" style="min-width:100%" align="center" name="submit" value="SUBMIT">';
     echo '</form>';
 }
+
+function print_rang($neto, $imena){
+    $user_id = $_SESSION['id'];
+    echo '<table> 
+          <tr> <td>Rang |</td><td>Username |</td><td>Neto vrijednost</td> </tr>';
+
+
+    for($i=1; $i<11; $i++){
+        if(empty($neto)) exit;
+        $max_vrijednost=max($neto);
+        $max_id=array_search($max_vrijednost, $neto);
+        unset($neto[$max_id]);
+        if($max_id==$user_id) echo '<tr style="color:red"> <td>'.$i.'.</td><td>'.$imena[$max_id].'</td><td>'.$max_vrijednost.'</td> </tr>'; 
+        else echo '<tr style="color:black"> <td>'.$i.'.</td><td>'.$imena[$max_id].'</td><td>'.$max_vrijednost.'</td> </tr>';
+    }
+
+    
+
+    if (array_key_exists($user_id,$neto)){
+        $user_rang=10;
+        while(array_key_exists($user_id,$neto)){
+            $user_rang++;
+            $max_vrijednost=max($neto);
+            $max_id=array_search($max_vrijednost, $neto);
+            unset($neto[$max_id]);
+        }
+        echo '<tr  style="color:red"> <td>'.$user_rang.'.</td><td>'.$imena[$max_id].'</td><td>'.$max_vrijednost.'</td> </tr>'; 
+
+    }
+
+    echo '</table>';
+}
