@@ -12,6 +12,7 @@ function create_tables()
 	create_table_kapital();
 	create_table_imovina();
     create_table_orderbook();
+    create_table_postavke();
 }
 
 function create_table_users()
@@ -148,5 +149,21 @@ function create_table_orderbook()
 		$st->execute();
 	} catch (PDOException $e) {
 		exit("PDO error (create_table_users): " . $e->getMessage());
+	}
+}
+
+function create_table_postavke()
+{
+	$db = DB::getConnection();
+
+	try {
+		$st = $db->prepare(
+			'CREATE TABLE IF NOT EXISTS burza_postavke (' .
+				'pocetni_kapital int NOT NULL)'
+		);
+
+		$st->execute();
+	} catch (PDOException $e) {
+		exit("PDO error (create_table_imovina): " . $e->getMessage());
 	}
 }

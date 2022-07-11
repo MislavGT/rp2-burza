@@ -6,11 +6,14 @@ class KapitalService
 {
     public function setCapitalToInitial($user_id)
     {
+        $as = new AdminService();
+        $initial_capital = $as->get_initial_capital();
+
         $db = DB::getConnection();
 
         try {
-            $st = $db->prepare('INSERT INTO burza_kapital VALUES (:id_user, 10000)');
-            $st->execute(array('id_user' => $user_id));
+            $st = $db->prepare('INSERT INTO burza_kapital VALUES (:id_user, :initial_capital)');
+            $st->execute(array('id_user' => $user_id, 'initial_capital' => $initial_capital));
         } catch (PDOException $e) {
             exit('Greška u bazi (KapitalService.setCapitalToInitial): ' . $e->getMessage());
         }

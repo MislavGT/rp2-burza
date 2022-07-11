@@ -144,3 +144,11 @@ function redirectIfNotLoggedIn()
 		header('Location: ' . __SITE_URL . '/burza.php');
 	}
 }
+
+function redirectIfNotAdmin()
+{
+	$as = new AdminService();
+	if (!$as->is_admin($_SESSION['id'])) {
+		header('Location: ' . __SITE_URL . '/burza.php');
+	}
+}

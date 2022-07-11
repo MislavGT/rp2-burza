@@ -12,6 +12,7 @@ function seed_tables()
 	seed_table_kapital();
 	seed_table_imovina();
     seed_table_orderbook();
+    seed_table_postavke();
 }
 
 function seed_table_users()
@@ -163,5 +164,21 @@ function seed_table_orderbook()
 
 	} catch (PDOException $e) {
 		exit("PDO error (seed_table_orderbook): " . $e->getMessage());
+	}
+}
+
+function seed_table_postavke()
+{
+	if (!is_table_empty('burza_postavke')) {
+		return;
+	}
+
+	$db = DB::getConnection();
+
+	try {
+		$st = $db->prepare('INSERT INTO burza_postavke(pocetni_kapital) VALUES (:pocetni_kapital)');
+		$st->execute(array('pocetni_kapital' => 10000));
+	} catch (PDOException $e) {
+		exit("PDO error (seed_table_imovina): " . $e->getMessage());
 	}
 }
