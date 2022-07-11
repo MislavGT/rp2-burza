@@ -160,15 +160,12 @@ class DioniceService
 					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'], 'cijena'=>$cijena, 'tip'=>$tip2 ) );
 					$st = $db->prepare( 'INSERT INTO burza_imovina (id_user, id_dionica, kolicina) VALUES(:id_user, :id_dionica, :kolicina) ON DUPLICATE KEY UPDATE burza_imovina.kolicina=burza_imovina.kolicina+:kolicina');
 					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $id_user, 'kolicina' => $row['kolicina'] ) );
-<<<<<<< HEAD
 					$st = $db->prepare( 'UPDATE burza_imovina SET kolicina=kolicina-:kolicina WHERE burza_imovina.id_dionica=:id_dionica AND burza_imovina.id_user=:id_user' );
 					$st->execute( array( 'kolicina' => $row['kolicina'], 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'] ) );
 					$st = $db->prepare( 'DELETE FROM burza_imovina WHERE kolicina=0' );
 					$st->execute( array(  ) );
-=======
 					$st = $db->prepare( 'DELETE * FROM burza_imovina WHERE burza_imovina.id_dionica=:id_dionica AND burza_imovina.id_user=:id_user' );
 					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'] ) );
->>>>>>> 704280ba9bd4ca59fa36f86887bc49c3b08ad83e
 					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital+:za_platiti WHERE id_user = :id_user' );
 					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $row['id_user'] ) );
 					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital-:za_platiti WHERE id_user = :id_user' );
@@ -191,13 +188,10 @@ class DioniceService
 					$st->execute( array( 'visak' => $visak, 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'], 'datum' => $row['datum'] ) );
 					$st = $db->prepare( 'INSERT INTO burza_imovina (id_user, id_dionica, kolicina) VALUES(:id_user, :id_dionica, :kolicina) ON DUPLICATE KEY UPDATE burza_imovina.kolicina=burza_imovina.kolicina+:kolicina');
 					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $id_user, 'kolicina' => $kolicina ) );
-<<<<<<< HEAD
 					$st = $db->prepare( 'UPDATE burza_imovina SET burza_imovina.kolicina=kolicina-:kolicina WHERE burza_imovina.id_dionica=:id_dionica AND burza_imovina.id_user=:id_user' );
 					$st->execute( array( 'kolicina' => $kolicina,'id_dionica' => $id_dionice, 'id_user' => $row['id_user'] ) );
-=======
 					$st = $db->prepare( 'UPDATE burza_imovina SET kolicina=kolicina-:kolicina WHERE burza_imovina.id_dionica=:id_dionica AND burza_imovina.id_user=:id_user' );
 					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'], "kolicina" => $kolicina ) );
->>>>>>> 704280ba9bd4ca59fa36f86887bc49c3b08ad83e
 					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital+:za_platiti WHERE id_user = :id_user' );
 					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $row['id_user'] ) );
 					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital-:za_platiti WHERE id_user = :id_user' );
@@ -219,15 +213,12 @@ class DioniceService
 					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'], 'cijena'=>$cijena, 'tip'=>$tip2 ) );
 					$st = $db->prepare( 'INSERT INTO burza_imovina (id_user, id_dionica, kolicina) VALUES(:id_user, :id_dionica, :kolicina) ON DUPLICATE KEY UPDATE burza_imovina.kolicina=burza_imovina.kolicina+:kolicina');
 					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $id_user, 'kolicina' => $row['kolicina'] ) );
-<<<<<<< HEAD
 					$st = $db->prepare( 'UPDATE burza_imovina SET kolicina=kolicina-:kolicina WHERE burza_imovina.id_dionica=:id_dionica AND burza_imovina.id_user=:id_user' );
 					$st->execute( array( 'kolicina' => $row['kolicina'], 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'] ) );
 					$st = $db->prepare( 'DELETE FROM burza_imovina WHERE kolicina=0' );
 					$st->execute( array(  ) );
-=======
 					$st = $db->prepare( 'DELETE * FROM burza_imovina WHERE burza_imovina.id_dionica=:id_dionica AND burza_imovina.id_user=:id_user' );
 					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'] ) );
->>>>>>> 704280ba9bd4ca59fa36f86887bc49c3b08ad83e
 					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital+:za_platiti WHERE id_user = :id_user' );
 					$st->execute( array( 'za_platiti' => $za_platiti, 'id_user' => $row['id_user'] ) );
 					$st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital-:za_platiti WHERE id_user = :id_user' );
