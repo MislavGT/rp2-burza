@@ -80,7 +80,7 @@ function create_table_transakcije()
 	try {
 		$st = $db->prepare(
 			'CREATE TABLE IF NOT EXISTS burza_transakcije (' .
-				'id int,' .
+				'id int NOT NULL PRIMARY KEY AUTO_INCREMENT,' .
 				'id_dionica int,' .
 				'kolicina int,' .
 				'cijena int,' .
