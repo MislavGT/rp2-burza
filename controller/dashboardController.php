@@ -16,4 +16,21 @@ class DashboardController extends BaseController
     {
         $this->index_with_error("");
     }
+
+    private function show_rang(){
+        $user_id = $_SESSION['id'];
+        $ds= new KapitalService();
+        $this->registry->template->title = 'Rang lista';
+        $this->registry->template->neto = $ds->neto_vrijednosti();
+        $this->registry->template->imena = $ds->imena();
+        $this->registry->template->username = $_SESSION['username'];
+        $this->registry->template->show('rang_index');
+
+    }
+
+    public function rang()
+    {
+        redirectIfNotLoggedIn();
+        $this->show_rang();
+    }
 }
