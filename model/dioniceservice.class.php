@@ -43,6 +43,17 @@ class DioniceService
         return $st->fetch();
     }
 
+	public function postaviDividendu($id_dionice, $dividenda) {
+		$db = DB::getConnection();
+
+        try {
+            $st = $db->prepare('UPDATE burza_dionice SET dividenda=:dividenda WHERE id=:id');
+            $st->execute(array('id' => $id_dionice, 'dividenda' => $dividenda));
+        } catch (PDOException $e) {
+            exit('Greška u bazi (DioniceService.postaviDividendu): ' . $e->getMessage());
+        }
+	}
+
     public function kupiDionice( $id_user, $id_dionice, $kolicina, $cijena ){
 		// Provjeri prvo postoje li taj user i ta dionica
 		try

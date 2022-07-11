@@ -64,7 +64,8 @@ function create_table_dionice()
 				'ime varchar(50) NOT NULL,' .
 				'ticker varchar(4) NOT NULL,' .
 				'izdano bigint,' .
-				'zadnja_cijena int)'
+				'zadnja_cijena int,' .
+				'dividenda int)'
 		);
 
 		$st->execute();
