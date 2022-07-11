@@ -76,9 +76,18 @@ $( document ).ready( function()
         print_dionica_ime($dionica);
         print_dionica_description($dionica);
         print_buy_sell_form();
-        $_SESSION['dionica']=$dionica['id'];
+        $_SESSION['dionica'] = $dionica['id'];
         ?>
     </div>
+
+
+    <?php
+    $as = new AdminService();
+    if ($as->is_admin($_SESSION['id'])) {
+        require __SITE_PATH . '/view/dionica_admin.php';
+    }
+    ?>
+
 </div>
 <div id="chartContainer" style="height: 600px; width: 600px;"></div>
 </body>

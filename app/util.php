@@ -53,6 +53,7 @@ function reset_database()
 	drop_table('burza_kapital');
 	drop_table('burza_imovina');
 	drop_table('burza_orderbook');
+	drop_table('burza_postavke');
 
 	create_tables();
 	seed_tables();
@@ -141,6 +142,14 @@ function debug()
 function redirectIfNotLoggedIn()
 {
 	if (!isset($_SESSION['username'])) {
+		header('Location: ' . __SITE_URL . '/burza.php');
+	}
+}
+
+function redirectIfNotAdmin()
+{
+	$as = new AdminService();
+	if (!$as->is_admin($_SESSION['id'])) {
 		header('Location: ' . __SITE_URL . '/burza.php');
 	}
 }
