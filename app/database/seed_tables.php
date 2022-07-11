@@ -62,9 +62,9 @@ function seed_table_dionice()
 	$db = DB::getConnection();
 
 	try {
-		/*$st = $db->prepare('INSERT INTO burza_dionice(ime, ticker, izdano, zadnja_cijena, dividenda) VALUES (:ime, :ticker, :izdano, :zadnja_cijena, :dividenda)');
+		$st = $db->prepare('INSERT INTO burza_dionice(ime, ticker, izdano, zadnja_cijena, dividenda) VALUES (:ime, :ticker, :izdano, :zadnja_cijena, :dividenda)');
 		
-		$curl = curl_init();
+		/*$curl = curl_init();
 
 		curl_setopt_array($curl, [
 			CURLOPT_URL => "https://yfapi.net/v6/finance/quote?symbols=AAPL%2CMSFT%2CGOOG%2CAMZN%2CTSLA%2CJNJ%2CMETA%2CNVDA%2CXOM%2CPG",
