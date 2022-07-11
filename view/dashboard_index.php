@@ -8,6 +8,13 @@
      echo '<a href="' . __SITE_URL . '/burza.php?rt=dashboard/rang"> <span class="clickable"></span> </a>';
     ?>
     </div>
+
+    <div class="card textcontent">
+    Moj portfolio
+    <?php
+     echo '<a href="' . __SITE_URL . '/burza.php?rt=dashboard/portfolio"> <span class="clickable"></span> </a>';
+    ?>
+    </div>
 </div>
 
 <?php require_once __SITE_PATH . '/view/_footer.php'; ?>

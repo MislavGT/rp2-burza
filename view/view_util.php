@@ -149,3 +149,16 @@ function print_rang($neto, $imena){
 
     echo '</table>';
 }
+
+function print_mojNeto($neto){
+    $user_id = $_SESSION['id'];
+    echo 'Moja neto vrijednost:';
+    echo $neto[$user_id];
+    echo '</br>';
+}
+
+function print_dnevnaZarada($dnevnaZarada){
+    echo 'Moja dnevna zarada je:';
+    echo $dnevnaZarada;
+
+}

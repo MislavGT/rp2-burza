@@ -74,4 +74,31 @@ class KapitalService
 
     }
 
+    public function dnevnaZarada($user_id){
+        $danas=date('Y-m-d H:i:s');
+        $dnevnaZarada=0;
+        try
+			{   $db = DB::getConnection();
+				$st = $db->prepare( 'SELECT burza_transakcije.kolicina, burza_transakcije.cijena FROM burza_transakcije WHERE burza_transakcije.prodao=:id_user AND burza_transakcije.datum=curdate()' );
+				$st->execute( array( 'id_user' => $user_id ) );
+			}
+			catch( PDOException $e ) { exit( 'DB error (kapitajService.dnevnaZarada):' . $e->getMessage() ); }
+        foreach($st as $row){
+            $dnevnaZarada+=$row['kolicina']*$row['cijena'];
+        }
+
+        try
+			{   $db = DB::getConnection();
+				$st = $db->prepare( 'SELECT burza_transakcije.kolicina, burza_transakcije.cijena FROM burza_transakcije WHERE burza_transakcije.kupio=:id_user AND burza_transakcije.datum=curdate()' );
+				$st->execute( array( 'id_user' => $user_id) );
+			}
+			catch( PDOException $e ) { exit( 'DB error (kapitalService.dnevnaZarada):' . $e->getMessage() ); }
+        foreach($st as $row){
+            $dnevnaZarada-=$row['kolicina']*$row['cijena'];
+        }
+
+        return $dnevnaZarada;
+
+    }
+
 };

@@ -33,4 +33,21 @@ class DashboardController extends BaseController
         redirectIfNotLoggedIn();
         $this->show_rang();
     }
+
+    private function show_portfolio(){
+        $user_id = $_SESSION['id'];
+        $ds= new KapitalService();
+        $this->registry->template->title = 'Moj portfolio';
+        $this->registry->template->neto = $ds->neto_vrijednosti();
+        $this->registry->template->dnevnaZarada = $ds->dnevnaZarada($user_id);
+        $this->registry->template->username = $_SESSION['username'];
+        $this->registry->template->show('portfolio_index');
+
+    }
+
+    public function portfolio()
+    {
+        redirectIfNotLoggedIn();
+        $this->show_portfolio();
+    }
 }
