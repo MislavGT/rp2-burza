@@ -112,7 +112,7 @@ function print_buy_sell_form(){
     echo '<br />';
     echo 'cijena: <input type="text" name="cijena" >';
     echo '<br />';
-    echo '<input type="radio" name="tip" value="buy">kupi
+    echo '<input type="radio" name="tip" value="buy" checked="checked">kupi
     <input type="radio" name="tip" value="sell">prodaj' ;
     echo ' <input type="submit" style="min-width:100%" align="center" name="submit" value="SUBMIT">';
     echo '</form>';

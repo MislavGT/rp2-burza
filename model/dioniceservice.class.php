@@ -341,7 +341,7 @@ class DioniceService
 					$st = $db->prepare( 'INSERT INTO burza_imovina (id_user, id_dionica, kolicina) VALUES(:id_user, :id_dionica, :kolicina) ON DUPLICATE KEY UPDATE burza_imovina.kolicina=burza_imovina.kolicina+:kolicina');
 					$st->execute( array( 'id_dionica' => $id_dionice, 'id_user' => $row['id_user'], 'kolicina' => $kolicina ) );
 					$st = $db->prepare( 'UPDATE burza_imovina SET kolicina=kolicina-:kolicina WHERE burza_imovina.id_dionica=:id_dionica AND burza_imovina.id_user=:id_user' );
-					$st->execute( array( 'kolicina' => $row['kolicina'], 'id_dionica' => $id_dionice, 'id_user' => $id_user ) );
+					$st->execute( array( 'kolicina' => $kolicina, 'id_dionica' => $id_dionice, 'id_user' => $id_user ) );
 					$st = $db->prepare( 'DELETE FROM burza_orderbook WHERE 
 					(SELECT kolicina FROM burza_imovina WHERE burza_imovina.id_user=:id_user AND burza_imovina.id_dionica=:id_dionica) <  burza_orderbook.kolicina AND burza_orderbook.tip=:tip AND burza_orderbook.id_user=:id_user AND burza_orderbook.id_dionica=:id_dionica' );
 					$st->execute( array( 'id_user' => $id_user, 'id_dionica' => $id_dionice, 'tip' => 'sell') );

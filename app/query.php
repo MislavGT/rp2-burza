@@ -33,11 +33,11 @@ foreach($st as $row) {
         $zt->execute( array('id' => $id_dionica, 'datum' => $x));
         $row2 = $zt->fetch();
         $low = $row2['mn'];
-        $zt = $db->prepare('SELECT cijena AS o FROM burza_transakcije WHERE id_dionica=:id AND datum = :datum ORDER BY datum ASC LIMIT 1');
+        $zt = $db->prepare('SELECT cijena AS o FROM burza_transakcije WHERE id_dionica=:id AND datum = :datum ORDER BY id ASC LIMIT 1');
         $zt->execute( array('id' => $id_dionica, 'datum' => $x));
         $row2 = $zt->fetch();
         $open = $row2['o'];
-        $zt = $db->prepare('SELECT cijena AS c FROM burza_transakcije WHERE id_dionica=:id AND datum = :datum ORDER BY datum DESC LIMIT 1');
+        $zt = $db->prepare('SELECT cijena AS c FROM burza_transakcije WHERE id_dionica=:id AND datum = :datum ORDER BY id DESC LIMIT 1');
         $zt->execute( array('id' => $id_dionica, 'datum' => $x));
         $row2 = $zt->fetch();
         $close = $row2['c'];
