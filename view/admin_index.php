@@ -16,6 +16,8 @@
         </ul>
     </form>
 
+    <a class="linkbutton" href="<?php echo __SITE_URL; ?>/burza.php?rt=admin/dividenda">Izdaj dividendu</a>
+
 </div>
 
 <?php require_once __SITE_PATH . '/view/_footer.php'; ?>

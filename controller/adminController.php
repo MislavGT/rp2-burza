@@ -48,4 +48,20 @@ class AdminController extends BaseController
         }
         header('Location: ' . __SITE_URL . '/burza.php?rt=admin');
     }
+
+    public function dividenda() {
+        $us = new UserService();
+        $ks = new KapitalService();
+
+        $svi_useri = $us->sviKorisnici();
+
+        foreach ($svi_useri as $korisnik) {
+            $imovina = $ks->imovina($korisnik['id']);
+            foreach ($imovina as $dionica) {
+                $ks->dodajUKapital($korisnik['id'], $dionica['dividenda']);
+            }
+        }
+        
+        header('Location: ' . __SITE_URL . '/burza.php?rt=admin');
+    }
 };

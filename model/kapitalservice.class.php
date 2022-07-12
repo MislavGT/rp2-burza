@@ -111,11 +111,22 @@ class KapitalService
 
     }
 
+    public function dodajUKapital($user_id, $kolicina) {
+        $db = DB::getConnection();
+
+        try {
+            $st = $db->prepare( 'UPDATE burza_kapital SET kapital=kapital+:kolicina WHERE id_user = :id_user' );
+            $st->execute( array( 'kolicina' => $kolicina, 'id_user' => $user_id ) );
+        } catch (PDOException $e) {
+            exit('DB error (KapitalService.dodajUKapital): ' . $e->getMessage());
+        }
+    }
+
     public function imovina($user_id) {
         $db = DB::getConnection();
 
         try {
-            $st = $db->prepare('SELECT burza_dionice.id, burza_dionice.ime, burza_imovina.kolicina
+            $st = $db->prepare('SELECT burza_dionice.id, burza_dionice.ime, burza_imovina.kolicina, burza_dionice.dividenda
                 FROM burza_imovina JOIN burza_dionice
                 WHERE
                     burza_imovina.id_user=:id_user AND
