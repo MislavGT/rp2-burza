@@ -64,7 +64,7 @@ function seed_table_dionice()
 	try {
 		$st = $db->prepare('INSERT INTO burza_dionice(ime, ticker, izdano, zadnja_cijena, dividenda) VALUES (:ime, :ticker, :izdano, :zadnja_cijena, :dividenda)');
 		
-		/*$curl = curl_init();
+		$curl = curl_init();
 
 		curl_setopt_array($curl, [
 			CURLOPT_URL => "https://yfapi.net/v6/finance/quote?symbols=AAPL%2CMSFT%2CGOOG%2CAMZN%2CTSLA%2CJNJ%2CMETA%2CNVDA%2CXOM%2CPG",
@@ -90,7 +90,7 @@ function seed_table_dionice()
 		
 		foreach($response as $i){
 			$st->execute(array('ime' => $i['longName'], 'ticker' => $i['symbol'], 'izdano' => $i['sharesOutstanding'], 'zadnja_cijena' => $i['regularMarketPrice'], 'dividenda' => 100));
-		} */
+		}
 
 		$st->execute(array('ime' => 'APPLE', 'ticker' => 'AAPL', 'izdano' => '1000', 'zadnja_cijena' => '100', 'dividenda' => 100));
 	} catch (PDOException $e) {

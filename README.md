@@ -77,7 +77,7 @@ Pratimo MVC arhitekturalni uzorak.
 Korisnici se mogu registrirati. Svaki korisnik dobiva početni kapital. `loginservice.class.php` `register_index.php`
 Kreiraju se tablice u bazi podataka i napune pripadnim podacima. `db.class.php` `create_tables.php` `seed_tables.php`
 Na početku postoji 5 korisnika koji unaprijed posjeduju dionice. Prvi, mirko, je ujedno i administrator.
-On može upravljati početnim kapitalom i dividendama pojedinih dionica. `adminservice.class.php` i `adminController.php`
+On može upravljati početnim kapitalom i dividendama pojedinih dionica, i on izdaje dividendu. `adminservice.class.php` i `adminController.php`
 
 ## Dashboard
 
