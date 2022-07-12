@@ -190,8 +190,8 @@ function seed_table_postavke()
 	$db = DB::getConnection();
 
 	try {
-		$st = $db->prepare('INSERT INTO burza_postavke(pocetni_kapital, kamata, komisija) VALUES (:pocetni_kapital, :kamata, :komisija)');
-		$st->execute(array('pocetni_kapital' => 10000, 'kamata' => 1, 'komisija' => 1));
+		$st = $db->prepare('INSERT INTO burza_postavke(pocetni_kapital, kamata, datum, komisija) VALUES (:pocetni_kapital, :kamata, :datum, :komisija)');
+		$st->execute(array('pocetni_kapital' => 10000, 'kamata' => 1, 'datum' => date('n'), 'komisija' => 1));
 	} catch (PDOException $e) {
 		exit("PDO error (seed_table_imovina): " . $e->getMessage());
 	}

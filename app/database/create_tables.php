@@ -162,6 +162,7 @@ function create_table_postavke()
 			'CREATE TABLE IF NOT EXISTS burza_postavke (' .
 				'pocetni_kapital int,' .
 				'kamata int,' .
+				'datum int,' .
 				'komisija int)'
 		);
 

@@ -78,6 +78,13 @@ class KapitalService
     }
 
     public function dnevnaZarada($user_id){
+        try
+			{   $db = DB::getConnection();
+				$st = $db->prepare( 'SELECT komisija FROM burza_postavke' );
+				$st->execute( array( ) );
+                $komisija = $st->fetch()['komisija'];
+			}
+			catch( PDOException $e ) { exit( 'DB error (kapitajService.dnevnaZarada):' . $e->getMessage() ); }
         $danas=date('Y-m-d H:i:s');
         $dnevnaZarada=0;
         try
@@ -87,7 +94,7 @@ class KapitalService
 			}
 			catch( PDOException $e ) { exit( 'DB error (kapitajService.dnevnaZarada):' . $e->getMessage() ); }
         foreach($st as $row){
-            $dnevnaZarada+=$row['kolicina']*$row['cijena'];
+            $dnevnaZarada+=$row['kolicina']*$row['cijena']*(100-$komisija)/100;
         }
 
         try

@@ -66,8 +66,8 @@ $( document ).ready( function()
                 }
             });
                 for(var i = 0; i < data.length; i++){
-                    dps1.push({x: new Date(data.i.date), y: [Number(data.i.open), Number(data.i.high), Number(data.i.low), Number(data.i.close)]});
-                    dps2.push({x: new Date(data.i.date), y: Number(data.i.close)});
+                    dps1.push({x: new Date(data[i].date), y: [Number(data[i].open), Number(data[i].high), Number(data[i].low), Number(data[i].close)]});
+                    dps2.push({x: new Date(data[i].date), y: Number(data[i].close)});
                 }
                 stockChart.render();
             }

@@ -2,20 +2,6 @@
 
 Virtualna burza vrijednosnih papira
 
-Opis zadatka:
-
-1. :heavy_check_mark: Svaki korisnik tokom registracije dobije fiksan početni kapital.
-2. :heavy_check_mark: Korisnik ima mogućnost prodaje i kupnje dionica.
-3. :x: Klikom na dionicu dobiju se dodatne informacije te povijest cijena dionica.
-4. :x: Na glavnoj stranici korisnik može vidjet cijeli svoj portfolio sa informacijama o:
-    1. :x: neto vrijednosti korisnika
-    2. :x: ukupna zarada
-    3. :x: dnevna zarada
-    4. :x: dividendu
-    5. :x: povijest transakcija itd.
-5. :x: Također postoji lista najbogatijih korisnika po neto vrijednosti te korisnik može vidjeti svoj rank.
-6. :x: Administrator stranice može postavit početni kapital, komisiju, dividendu, kamatnu stopu itd.
-
 ## Postavljanje baze
 
 1. Otvori terminal pa `sudo mysql`
@@ -46,6 +32,7 @@ Opis zadatka:
 3. ticker varchar(4)
 4. izdano int
 5. zadnja_cijena int
+6. dividenda int
 
 ### `burza_transakcije`
 
@@ -55,7 +42,7 @@ Opis zadatka:
 4. cijena int
 5. prodao int
 6. kupio int
-7. datum date
+7. datum datetime
 
 ### `burza_kapital`
 
@@ -67,3 +54,51 @@ Opis zadatka:
 1. id_user int
 2. id_dionica int
 3. kolicina int
+
+### `burza_orderbook`
+
+1. id_user int
+2. id_dionica int
+3. kolicina int
+4. cijena int
+5. tip enum('buy', 'sell')
+6. datum datetime
+
+### `burza_postavke`
+
+1. pocetni_kapital int
+2. kamata int
+3. datum int
+4. komisija int
+
+## Početak
+
+Pratimo MVC arhitekturalni uzorak.
+Korisnici se mogu registrirati. Svaki korisnik dobiva početni kapital. `loginservice.class.php` `register_index.php`
+Kreiraju se tablice u bazi podataka i napune pripadnim podacima. `db.class.php` `create_tables.php` `seed_tables.php`
+Napočetku postoji 5 korisnika koji unaprijed posjeduju dionice. Prvi, mirko, je ujedno i administrator.
+On može upravljati početnim kapitalom i dividendama pojedinih dionica. `adminservise.class.php` i `adminController.php`
+
+## Dashboard
+
+Korisnik može vidjeti svoj portfelj, dionice i neto vrijednost. `dashboard_index.php` `portfolio_index.php`
+Postoji i rang lista korisnika. Gdje je ulogirani korisnik označen crvenom bojom. `rang_index.php`
+
+## Dionice
+
+Svaki korisnik ima mogućnost kupnje i prodaje dionica. `dioniceservice.class.php` `jedna_dionica_index.php` `dioniceController.php`
+Ponuđeno je 10 popularnih dionica i prilikom generiranja baze podataka koristeći `Yahoo Finance API` pribave se stvarni podaci.
+Kada korisnik želi kupiti ili prodati dionice, odabire broj dionica kojima želi trgovati i najgoru cijenu koju je spreman prihvatiti.
+Tada se provjeri ispunjava li uvjete. Zabranjeno je "ići u minus".
+Pretragom tablice `burza_orderbook` rekurzivno se ispunjava njegova narudžba najboljim cijenama (osim toga, preferiraju se starije narudžbe).
+Ukoliko se u tom trenutku narudžba ne može do kraja ispuniti, ostatak odlazi u `burza_orderbook` na čekanje.
+Također, ostale tablice se prikladno ažuriraju.
+Stranica za svaku prodaju uzima proporcionalnu komisiju.
+
+## Graf
+
+Za svaku dionicu pamtimo njenu `zadnju_cijenu`. Isto tako, iz `burze_transakcije` možemo isčitati povijest cijena.
+Jedini klijentski dio našeg projekta je iscrtavanje grafa povijesti cijena. 
+U PHP-u imamo `query.php` dio koji pribavlja tražene podatke SQL naredbama. 
+Odgovara na `Ajax` upit `(GET)` koji `JavaScript` šalje iz `jedna_dionica_index.php`.
+Zatim koristi dobiveni `JSON` objekt kako bi alatom `CanvasJS` prikazao graf.
