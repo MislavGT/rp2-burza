@@ -2,6 +2,8 @@
 
 Virtualna burza vrijednosnih papira
 
+### mirko mirkovasifra je admin
+
 ## Postavljanje baze
 
 1. Otvori terminal pa `sudo mysql`
