@@ -120,7 +120,7 @@ function create_table_imovina()
 			'CREATE TABLE IF NOT EXISTS burza_imovina (' .
 				'id_user int NOT NULL,' .
 				'id_dionica int NOT NULL,' .
-				'kolicina int NOT NULL,' .
+				'kolicina bigint NOT NULL,' .
 				'PRIMARY KEY (id_user, id_dionica))'
 		);
 

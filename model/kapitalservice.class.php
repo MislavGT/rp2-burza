@@ -105,6 +105,23 @@ class KapitalService
     }
 
     public function imovina($user_id) {
-        
+        $db = DB::getConnection();
+
+        try {
+            $st = $db->prepare('SELECT burza_dionice.id, burza_dionice.ime, burza_imovina.kolicina
+                FROM burza_imovina JOIN burza_dionice
+                WHERE
+                    burza_imovina.id_user=:id_user AND
+                    burza_imovina.id_dionica=burza_dionice.id');
+            $st->execute(array('id_user' => $user_id));
+        } catch (PDOException $e) {
+            exit('DB error (KapitalService.imovina): ' . $e->getMessage());
+        }
+
+        $imovina = array();
+        while ($row = $st->fetch()) {
+            array_push($imovina, $row);
+        }
+        return $imovina;
     }
 };

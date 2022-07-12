@@ -152,12 +152,21 @@ function print_rang($neto, $imena){
 
 function print_mojNeto($neto){
     $user_id = $_SESSION['id'];
-    echo 'Moja neto vrijednost:';
+    echo 'Neto vrijednost: ';
     echo $neto[$user_id];
-    echo '</br>';
 }
 
 function print_dnevnaZarada($dnevnaZarada){
-    echo 'Moja dnevna zarada je:';
+    echo 'Dnevna zarada: ';
     echo $dnevnaZarada;
+}
+
+function print_portfolio($imovina) {
+    echo '<ul>';
+    foreach ($imovina as $dionica) {
+        echo '<li>';
+        echo $dionica['ime'] . ': ' . $dionica['kolicina'];
+        echo '</li>';
+    }
+    echo '</ul>';
 }
