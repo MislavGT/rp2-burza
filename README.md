@@ -76,13 +76,13 @@ Virtualna burza vrijednosnih papira
 Pratimo MVC arhitekturalni uzorak.
 Korisnici se mogu registrirati. Svaki korisnik dobiva početni kapital. `loginservice.class.php` `register_index.php`
 Kreiraju se tablice u bazi podataka i napune pripadnim podacima. `db.class.php` `create_tables.php` `seed_tables.php`
-Napočetku postoji 5 korisnika koji unaprijed posjeduju dionice. Prvi, mirko, je ujedno i administrator.
-On može upravljati početnim kapitalom i dividendama pojedinih dionica. `adminservise.class.php` i `adminController.php`
+Na početku postoji 5 korisnika koji unaprijed posjeduju dionice. Prvi, mirko, je ujedno i administrator.
+On može upravljati početnim kapitalom i dividendama pojedinih dionica. `adminservice.class.php` i `adminController.php`
 
 ## Dashboard
 
 Korisnik može vidjeti svoj portfelj, dionice i neto vrijednost. `dashboard_index.php` `portfolio_index.php`
-Postoji i rang lista korisnika. Gdje je ulogirani korisnik označen crvenom bojom. `rang_index.php`
+Postoji i rang lista korisnika, na kojoj je ulogirani korisnik označen crvenom bojom. `rang_index.php`
 
 ## Dionice
 
@@ -97,7 +97,7 @@ Stranica za svaku prodaju uzima proporcionalnu komisiju.
 
 ## Graf
 
-Za svaku dionicu pamtimo njenu `zadnju_cijenu`. Isto tako, iz `burze_transakcije` možemo isčitati povijest cijena.
+Za svaku dionicu pamtimo njenu `zadnju_cijenu`. Isto tako, iz `burze_transakcije` možemo iščitati povijest cijena.
 Jedini klijentski dio našeg projekta je iscrtavanje grafa povijesti cijena. 
 U PHP-u imamo `query.php` dio koji pribavlja tražene podatke SQL naredbama. 
 Odgovara na `Ajax` upit `(GET)` koji `JavaScript` šalje iz `jedna_dionica_index.php`.
