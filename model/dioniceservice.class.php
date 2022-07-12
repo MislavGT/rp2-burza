@@ -347,6 +347,6 @@ class DioniceService
 				catch( PDOException $e ) { exit( 'DB error (DioniceService.kupiProdajOdmah):' . $e->getMessage() ); }
 			}
 		}
-			
+		
 	}
 }

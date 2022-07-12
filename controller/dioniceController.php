@@ -57,6 +57,7 @@ class DioniceController extends BaseController
         $tip=$_POST['tip'];
 
         $ls->kupiProdajOdmah( $user_id, $dionica_id, $kolicina, $cijena, $tip );
+		header('Location: ' . __SITE_URL . '/burza.php?rt=dionice');
     }
 
     public function promijeni() {
