@@ -158,7 +158,7 @@ function seed_table_imovina()
 
 			foreach ($svi_korisnici as $korisnik) {
 				$st = $db->prepare('INSERT INTO burza_imovina(id_user, id_dionica, kolicina) VALUES (:id_user, :id_dionica, :kolicina)');
-				$st->execute(array('id_user' => $korisnik['id'], 'id_dionica' => $dionica['id'], 'kolicina' => $kolicina));
+				$st->execute(array('id_user' => $korisnik['id'], 'id_dionica' => $dionica['id'], 'kolicina' => round($kolicina/1000000)));
 			}
 		}
 	} catch (PDOException $e) {
@@ -190,8 +190,8 @@ function seed_table_postavke()
 	$db = DB::getConnection();
 
 	try {
-		$st = $db->prepare('INSERT INTO burza_postavke(pocetni_kapital) VALUES (:pocetni_kapital)');
-		$st->execute(array('pocetni_kapital' => 10000));
+		$st = $db->prepare('INSERT INTO burza_postavke(pocetni_kapital, kamata, komisija) VALUES (:pocetni_kapital, :kamata, :komisija)');
+		$st->execute(array('pocetni_kapital' => 10000, 'kamata' => 1, 'komisija' => 1));
 	} catch (PDOException $e) {
 		exit("PDO error (seed_table_imovina): " . $e->getMessage());
 	}

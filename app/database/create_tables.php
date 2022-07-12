@@ -12,6 +12,7 @@ function create_tables()
 	create_table_kapital();
 	create_table_imovina();
     create_table_orderbook();
+	create_table_postavke();
 }
 
 function create_table_users()
@@ -63,7 +64,8 @@ function create_table_dionice()
 				'ime varchar(50) NOT NULL,' .
 				'ticker varchar(4) NOT NULL,' .
 				'izdano bigint,' .
-				'zadnja_cijena int)'
+				'zadnja_cijena int,' .
+				'dividenda int)'
 		);
 
 		$st->execute();
@@ -147,6 +149,24 @@ function create_table_orderbook()
 
 		$st->execute();
 	} catch (PDOException $e) {
-		exit("PDO error (create_table_users): " . $e->getMessage());
+		exit("PDO error (create_table_orderbook): " . $e->getMessage());
+	}
+}
+
+function create_table_postavke()
+{
+	$db = DB::getConnection();
+
+	try {
+		$st = $db->prepare(
+			'CREATE TABLE IF NOT EXISTS burza_postavke (' .
+				'pocetni_kapital int,' .
+				'kamata int' .
+				'komisija int)'
+		);
+
+		$st->execute();
+	} catch (PDOException $e) {
+		exit("PDO error (create_table_postavke): " . $e->getMessage());
 	}
 }
