@@ -12,7 +12,6 @@ function create_tables()
 	create_table_kapital();
 	create_table_imovina();
     create_table_orderbook();
-    create_table_postavke();
 }
 
 function create_table_users()
@@ -64,8 +63,7 @@ function create_table_dionice()
 				'ime varchar(50) NOT NULL,' .
 				'ticker varchar(4) NOT NULL,' .
 				'izdano bigint,' .
-				'zadnja_cijena int,' .
-				'dividenda int)'
+				'zadnja_cijena int)'
 		);
 
 		$st->execute();
@@ -81,7 +79,7 @@ function create_table_transakcije()
 	try {
 		$st = $db->prepare(
 			'CREATE TABLE IF NOT EXISTS burza_transakcije (' .
-				'id int NOT NULL PRIMARY KEY AUTO_INCREMENT,' .
+				'id int,' .
 				'id_dionica int,' .
 				'kolicina int,' .
 				'cijena int,' .
@@ -150,21 +148,5 @@ function create_table_orderbook()
 		$st->execute();
 	} catch (PDOException $e) {
 		exit("PDO error (create_table_users): " . $e->getMessage());
-	}
-}
-
-function create_table_postavke()
-{
-	$db = DB::getConnection();
-
-	try {
-		$st = $db->prepare(
-			'CREATE TABLE IF NOT EXISTS burza_postavke (' .
-				'pocetni_kapital int NOT NULL)'
-		);
-
-		$st->execute();
-	} catch (PDOException $e) {
-		exit("PDO error (create_table_imovina): " . $e->getMessage());
 	}
 }
