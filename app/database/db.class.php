@@ -16,7 +16,7 @@ class DB
 	{
 		if (DB::$db === null) {
 			try {
-				DB::$db = new PDO("mysql: host=localhost; dbname=burza; charset=utf8", 'burza', 'burza');
+				DB::$db = new PDO("mysql: host=https://rp2.studenti.math.hr/; dbname=stojanovic; charset=utf8", 'student', 'pass.mysql');
 				DB::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			} catch (PDOException $e) {
 				exit('PDO Error: ' . $e->getMessage());

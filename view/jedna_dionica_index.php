@@ -5,7 +5,19 @@
 <head>
 <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.stock.min.js"></script>
-<script>
+<style type="text/css">
+    #chartContainer{
+	position: absolute;
+        right: 100px;
+        top: 200px;
+        height: 500px;
+        width: 1000px;
+    }
+</style>
+
+</head>
+<body>
+<script type="text/javascript">
 $( document ).ready( function()
 {
 	$.ajax(
@@ -16,6 +28,7 @@ $( document ).ready( function()
 			id: <?php echo json_encode($dionica['id']); ?>
 		},
 		dataType: "json",
+        type: "GET",
 		success: function( data )
 		{
             console.log(data);
@@ -24,11 +37,8 @@ $( document ).ready( function()
                 theme: "light2",
                 exportEnabled: true,
                 title:{
-                text:""
+                text: "Povijest cijena"
                 },
-                subtitles: [{
-                text: ""
-                }],
                 charts: [{
                 axisX: {
                     crosshair: {
@@ -37,11 +47,11 @@ $( document ).ready( function()
                     }
                 },
                 axisY: {
-                    prefix: "$"
+                    prefix: "kn"
                 },
                 data: [{
                     type: "candlestick",
-                    yValueFormatString: "$#,###.##",
+                    yValueFormatString: "kn####.##",
                     dataPoints : dps1
                 }]
                 }],
@@ -56,8 +66,8 @@ $( document ).ready( function()
                 }
             });
                 for(var i = 0; i < data.length; i++){
-                    dps1.push({x: new Date(data[i].date), y: [Number(data[i].open), Number(data[i].high), Number(data[i].low), Number(data[i].close)]});
-                    dps2.push({x: new Date(data[i].date), y: Number(data[i].close)});
+                    dps1.push({x: new Date(data.i.date), y: [Number(data.i.open), Number(data.i.high), Number(data.i.low), Number(data.i.close)]});
+                    dps2.push({x: new Date(data.i.date), y: Number(data.i.close)});
                 }
                 stockChart.render();
             }
@@ -66,8 +76,6 @@ $( document ).ready( function()
     }
 );
 </script>
-</head>
-<body>
 <div class="contentcontainer">
     <div class="card">
         <?php
@@ -88,7 +96,7 @@ $( document ).ready( function()
     ?>
 
 </div>
-<div id="chartContainer" style="height: 600px; width: 600px;"></div>
+<div id="chartContainer"></div>
 </body>
 </html>
 <?php require_once __SITE_PATH . '/view/_footer.php'; ?>
