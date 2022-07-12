@@ -8,18 +8,17 @@
 <script>
 $( document ).ready( function()
 {
-    let canvas = $("#canvas");
-    let ctx = canvas.get(0).getContext("2d");
 	$.ajax(
 	{
-		url: "../app/query.php",
+		url: "../rp2-burza/app/query.php",
 		data:
 		{
-			id: var something=<?php echo json_encode($dionica['id']); ?>;
+			id: <?php echo json_encode($dionica['id']); ?>
 		},
 		dataType: "json",
 		success: function( data )
 		{
+            console.log(data);
             var dps1 = [], dps2= [];
             var stockChart = new CanvasJS.StockChart("chartContainer",{
                 theme: "light2",
@@ -61,7 +60,7 @@ $( document ).ready( function()
                     dps2.push({x: new Date(data[i].date), y: Number(data[i].close)});
                 }
                 stockChart.render();
-            };
+            }
             }
         )
     }
