@@ -161,7 +161,7 @@ function create_table_postavke()
 		$st = $db->prepare(
 			'CREATE TABLE IF NOT EXISTS burza_postavke (' .
 				'pocetni_kapital int,' .
-				'kamata int' .
+				'kamata int,' .
 				'komisija int)'
 		);
 
