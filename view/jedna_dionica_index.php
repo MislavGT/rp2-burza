@@ -25,7 +25,7 @@ $( document ).ready( function()
 		url: "../rp2-burza/app/query.php",
 		data:
 		{
-			id: <?php echo json_encode($dionica['id']); ?>
+			id_dionice: <?php echo json_encode($dionica['id']); ?>
 		},
 		dataType: "json",
         type: "GET",
@@ -51,7 +51,7 @@ $( document ).ready( function()
                 },
                 data: [{
                     type: "candlestick",
-                    yValueFormatString: "kn####.##",
+                    yValueFormatString: "#,###.##kn",
                     dataPoints : dps1
                 }]
                 }],

@@ -85,7 +85,7 @@ class KapitalService
                 $komisija = $st->fetch()['komisija'];
 			}
 			catch( PDOException $e ) { exit( 'DB error (kapitajService.dnevnaZarada):' . $e->getMessage() ); }
-        $danas=date('Y-m-d H:i:s');
+        $danas=date('Y-m-d');
         $dnevnaZarada=0;
         try
 			{   $db = DB::getConnection();

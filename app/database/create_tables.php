@@ -139,6 +139,7 @@ function create_table_orderbook()
 	try {
 		$st = $db->prepare(
 			'CREATE TABLE IF NOT EXISTS burza_orderbook (' .
+				'id int PRIMARY KEY AUTO_INCREMENT,' .
 				'id_user int,' .
 				'id_dionica int,' .
 				'kolicina int,' .

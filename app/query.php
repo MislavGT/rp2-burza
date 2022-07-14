@@ -12,14 +12,14 @@ function sendJSONandExit( $message )
 
 $db = DB::getConnection();
 
-$id_dionica = (int)$_GET['id'];
+$id_dionica = (int)$_GET['id_dionice'];
 
 try {
     $st = $db->prepare('SELECT DISTINCT datum FROM burza_transakcije WHERE id_dionica=:id');
     $st->execute( array('id' => $id_dionica));
 
 } catch (PDOException $e) {
-    exit("PDO error (ajax): " . $e->getMessage());
+    exit("PDO error (ajax_transakcije): " . $e->getMessage());
 }
 $message = [];
 foreach($st as $row) {

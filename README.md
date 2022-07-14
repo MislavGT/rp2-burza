@@ -85,6 +85,9 @@ On može upravljati početnim kapitalom i dividendama pojedinih dionica, i on iz
 
 Korisnik može vidjeti svoj portfelj, dionice i neto vrijednost. `dashboard_index.php` `portfolio_index.php`
 Postoji i rang lista korisnika, na kojoj je ulogirani korisnik označen crvenom bojom. `rang_index.php`
+Također, korisnik može vidjeti svoje aktivne neispunjene narudžbe. `orders.php` na `Ajax` upit vraća popis.
+`JavaScript` ispisuje taj popis, s time da još jedan ugniježđeni `Ajax` upit vraća detaljnije podatke o samoj dionici o kojoj se radi preko `koja_je_dionica.php`.
+Zatim klikom miša na narudžbu možemo ju izbrisati tako što se pošalje zahtjev za brisanje skripti `izbrisi_order.php`.
 
 ## Dionice
 
@@ -100,7 +103,6 @@ Stranica za svaku prodaju uzima proporcionalnu komisiju.
 ## Graf
 
 Za svaku dionicu pamtimo njenu `zadnju_cijenu`. Isto tako, iz `burze_transakcije` možemo iščitati povijest cijena.
-Jedini klijentski dio našeg projekta je iscrtavanje grafa povijesti cijena. 
 U PHP-u imamo `query.php` dio koji pribavlja tražene podatke SQL naredbama. 
-Odgovara na `Ajax` upit `(GET)` koji `JavaScript` šalje iz `jedna_dionica_index.php`.
+Odgovara na `Ajax` upit koji `JavaScript` šalje iz `jedna_dionica_index.php`.
 Zatim koristi dobiveni `JSON` objekt kako bi alatom `CanvasJS` prikazao graf.

@@ -63,7 +63,7 @@ function seed_table_dionice()
 
 	try {
 		$st = $db->prepare('INSERT INTO burza_dionice(ime, ticker, izdano, zadnja_cijena, dividenda) VALUES (:ime, :ticker, :izdano, :zadnja_cijena, :dividenda)');
-		
+		/*
 		$curl = curl_init();
 
 		curl_setopt_array($curl, [
@@ -91,7 +91,7 @@ function seed_table_dionice()
 		foreach($response as $i){
 			$st->execute(array('ime' => $i['longName'], 'ticker' => $i['symbol'], 'izdano' => $i['sharesOutstanding'], 'zadnja_cijena' => $i['regularMarketPrice'], 'dividenda' => 100));
 		}
-
+		*/
 		$st->execute(array('ime' => 'APPLE', 'ticker' => 'AAPL', 'izdano' => '1000', 'zadnja_cijena' => '100', 'dividenda' => 100));
 	} catch (PDOException $e) {
 		exit("PDO error (seed_table_dionice): " . $e->getMessage());
@@ -107,9 +107,22 @@ function seed_table_transakcije()
 	$db = DB::getConnection();
 
 	try {
-		// $st = $db->prepare('INSERT INTO burza_transakcije(id_dionice, kolicina, cijena, prodao, kupio) VALUES (:id_dionice, :kolicina, :cijena, :prodao, :kupio)');
-
-		// $st->execute(array());
+		$st = $db->prepare('INSERT INTO burza_transakcije(id, id_dionica, kolicina, cijena, prodao, kupio, datum) VALUES (:id, :id_dionice, :kolicina, :cijena, :prodao, :kupio, :datum)');
+		$date = new DateTime('tomorrow');
+		$datum = $date->format('Y-m-d');
+		$st->execute(array( 'id' => 1, 'id_dionice' => 1, 'kolicina' => 10, 'cijena' => 100, 'prodao' => 1, 'kupio' => 2, 'datum' => $datum));
+		$st->execute(array( 'id' => 2, 'id_dionice' => 1, 'kolicina' => 20, 'cijena' => 150, 'prodao' => 2, 'kupio' => 3, 'datum' => $datum));
+		$st->execute(array( 'id' => 3, 'id_dionice' => 1, 'kolicina' => 30, 'cijena' => 200, 'prodao' => 3, 'kupio' => 4, 'datum' => $datum));
+		$date->modify('+1 day');
+		$datum = $date->format('Y-m-d');
+		$st->execute(array( 'id' => 4, 'id_dionice' => 1, 'kolicina' => 40, 'cijena' => 200, 'prodao' => 4, 'kupio' => 5, 'datum' => $datum));
+		$st->execute(array( 'id' => 5, 'id_dionice' => 1, 'kolicina' => 50, 'cijena' => 175, 'prodao' => 5, 'kupio' => 1, 'datum' => $datum));
+		$st->execute(array( 'id' => 6, 'id_dionice' => 1, 'kolicina' => 40, 'cijena' => 200, 'prodao' => 4, 'kupio' => 2, 'datum' => $datum));
+		$date->modify('+1 day');
+		$datum = $date->format('Y-m-d');
+		$st->execute(array( 'id' => 7, 'id_dionice' => 1, 'kolicina' => 30, 'cijena' => 350, 'prodao' => 3, 'kupio' => 3, 'datum' => $datum));
+		$st->execute(array( 'id' => 8, 'id_dionice' => 1, 'kolicina' => 40, 'cijena' => 450, 'prodao' => 2, 'kupio' => 4, 'datum' => $datum));
+		$st->execute(array( 'id' => 9, 'id_dionice' => 1, 'kolicina' => 50, 'cijena' => 150, 'prodao' => 1, 'kupio' => 5, 'datum' => $datum));
 	} catch (PDOException $e) {
 		exit("PDO error (seed_table_transakcije): " . $e->getMessage());
 	}
